@@ -2,7 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  render() {
+    return {
+      title: 'Главная страница',
+      message: 'dsfdsf',
+      isHome: true,
+      layout: 'layouts/main',
+    };
   }
 }
