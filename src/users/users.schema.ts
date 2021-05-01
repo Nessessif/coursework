@@ -5,6 +5,9 @@ export type UserDoc = Document & User;
 
 @Schema()
 export class User {
+  @Prop()
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   email: string;
 
