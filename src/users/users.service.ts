@@ -20,8 +20,14 @@ export class UsersService {
   }
 
   async registerUser(dto: RegisterUserDto) {
-    dto.password = await bcrypt.hash(dto.password, 10);
-    return await this.userRepository.create(dto);
+    // dto.password = await bcrypt.hash(dto.password, 10);
+    return await this.userRepository.create({
+      _id: Types.ObjectId(),
+      email: dto.email,
+      password: await bcrypt.hash(dto.password, 10),
+      username: dto.username,
+      phoneNumber: dto.phoneNumber,
+    });
   }
 
   async getUserById(_id: string): Promise<UserDoc> {

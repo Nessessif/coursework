@@ -7,6 +7,11 @@
 
 var instance = M.Tabs.init(document.querySelectorAll('.tabs'));
 
+var element = document.querySelector('input[type="tel"]');
+var maskOptions = {
+  mask: '+375 (00) 000-00-00',
+};
+IMask(element, maskOptions);
 // document.querySelectorAll('.price').forEach((node) => {
 //   node.textContent = toCurrency(node.textContent);
 // });

@@ -4,7 +4,7 @@ import { join } from 'path';
 import * as flash from 'connect-flash';
 import { AppModule } from './app.module';
 import * as hbs from 'hbs';
-
+import * as session from 'express-session';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -14,8 +14,16 @@ async function bootstrap() {
   hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
   // app.set('view options ', { layout: join('layouts', 'main') });
 
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
   app.use(flash());
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
+  console.log(`start server ${process.env.PORT}`);
 }
 bootstrap();
