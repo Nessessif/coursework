@@ -1,6 +1,10 @@
 <nav>
   <div class="nav-wrapper">
+    {{#if isAdmin}}
+    <a href="/admin" class="brand-logo">Администрирование</a>
+    {{else}}
     <a href="/" class="brand-logo">Магазин</a>
+    {{/if}}
     <ul id="nav-mobile" class="right hide-on-med-and-down">
 
       {{#if isHome}}
