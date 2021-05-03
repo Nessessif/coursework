@@ -5,13 +5,15 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/users.schema';
 import * as bcrypt from 'bcrypt';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+    private usersRepository: UsersRepository,
+  ) { }
   async render(loginError: string, registerError: string) {
     return {
       title: 'Авторизация',
@@ -27,8 +29,7 @@ export class AuthService {
   // }
 
   async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.usersService.getByEmail(email);
-    console.log(user);
+    const user = await this.usersRepository.getByEmail(email);
 
     if (!user) {
       return null;
@@ -47,7 +48,7 @@ export class AuthService {
   }
 
   async register(dto: RegisterUserDto, confirm: string): Promise<string> {
-    const user = await this.usersService.getByEmail(dto.email);
+    const user = await this.usersRepository.getByEmail(dto.email);
     if (user) {
       return 'Такой email уже зарегестрирован';
     }
@@ -55,7 +56,7 @@ export class AuthService {
       return 'Пароли не совпадают';
     }
 
-    await this.usersService.registerUser(dto);
+    await this.usersRepository.registerUser(dto);
     return 'good';
   }
 }

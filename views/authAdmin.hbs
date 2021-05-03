@@ -1,0 +1,22 @@
+<div class="row auth">
+  <div id="login" class="col s6 offset-s3">
+    {{#if loginError}}
+    <p class="alert">{{loginError}}</p>
+    {{/if}}
+    <h1>Войти</h1>
+    <form action="/admin/login" method="POST">
+      <div class="input-field">
+        <input id="username" name="username" type="text" class="validate" required>
+        <label for="username">Логин</label>
+        <span class="helper-text" data-error="Введите логин"></span>
+      </div>
+
+      <div class="input-field">
+        <input id="password" name="password" type="password" class="validate" required>
+        <label for="password">Пароль</label>
+        <span class="helper-text" data-error="Введите пароль"></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+  </div>
