@@ -1,30 +1,42 @@
 <nav>
   <div class="nav-wrapper">
     {{#if isAdmin}}
-    <a href="/admin" class="brand-logo">Администрирование</a>
+      <a href="/admin" class="brand-logo">Администрирование</a>
     {{else}}
-    <a href="/" class="brand-logo">Магазин</a>
+      <a href="/" class="brand-logo">Риэлторство</a>
     {{/if}}
+    
     <ul id="nav-mobile" class="right hide-on-med-and-down">
 
-      {{#if isHome}}
-      <li class="active"><a href="/">Главная</a></li>
-      {{else}}
-      <li><a href="/">Главная</a></li>
-      {{/if}}
+    {{!-- {{#if isHome}} --}}
+      {{!-- <li class="active"><a href="/">Главная</a></li> --}}
+    {{!-- {{else}} --}}
+      {{!-- <li><a href="/">Главная</a></li> --}}
+    {{!-- {{/if}} --}}
 
-      {{#if isAuth}}
+    {{#if isAuth}}
 
-      <li><a href="/auth/logout">Выйти</a></li>
+      <a class="dropdown-trigger btn" href="#" data-target="dropdown1">Пользователь</a>
 
-      {{else}}
+ 
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="/announcement/sale">Продать квартиру</a></li>
+        <li><a href="/announcement/rent">Сдать в аренду квартиру</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="/auth/logout">Выйти</a></li>
+      </ul>
+
+    {{else}}
+
+
 
       {{#if isLogin}}
-      <li class='active'><a href="/auth#login">Войти</a></li>
+        <li class='active'><a href="/auth#login">Войти</a></li>
       {{else}}
-      <li><a href="/auth#login">Войти</a></li>
+        <li><a href="/auth#login">Войти</a></li>
       {{/if}}
-      {{/if}}
+
+    {{/if}}
 
     </ul>
   </div>

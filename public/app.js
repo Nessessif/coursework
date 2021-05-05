@@ -7,11 +7,22 @@
 
 var instance = M.Tabs.init(document.querySelectorAll('.tabs'));
 
-var element = document.querySelector('input[type="tel"]');
-var maskOptions = {
-  mask: '+375 (00) 000-00-00',
-};
-IMask(element, maskOptions);
+// var element = document.querySelector('input[type="tel"]');
+// var maskOptions = {
+//   mask: '+375 (00) 000-00-00',
+// };
+// IMask(element, maskOptions);
+
+document.addEventListener('DOMContentLoaded', function () {
+  var drop = document.querySelectorAll('.dropdown-trigger');
+  M.Dropdown.init(drop);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  var selects = document.querySelectorAll('select');
+  M.FormSelect.init(selects);
+});
+
 // document.querySelectorAll('.price').forEach((node) => {
 //   node.textContent = toCurrency(node.textContent);
 // });
