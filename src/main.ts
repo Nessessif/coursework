@@ -5,6 +5,7 @@ import * as flash from 'connect-flash';
 import { AppModule } from './app.module';
 import * as hbs from 'hbs';
 import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -23,6 +24,7 @@ async function bootstrap() {
     }),
   );
   app.use(flash());
+  app.use(cookieParser());
 
   await app.listen(process.env.PORT);
   console.log(`start server ${process.env.PORT}`);

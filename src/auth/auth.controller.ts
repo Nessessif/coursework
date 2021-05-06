@@ -20,17 +20,30 @@ export class AuthController {
   @Get()
   @Render('auth')
   async render(@Req() req) {
+    req.cookies['Authentication'];
+
     return this.authService.render(
       req.flash('loginError'),
       req.flash('registerError'),
     );
   }
-
   @Post('login')
   @UseGuards(AuthGuard('local'))
   async login(@Req() request, @Res() res: Response) {
-    const token = await this.authService.login(request.user);
-    res.cookie('Authentication', token.access_token);
+    if (typeof request.user === 'object') {
+      // const token = await this.authService.login(request.user);
+      // res.cookie('Authentication', token.access_token);
+      res.cookie('Authentication', request.user._id);
+      res.redirect('/');
+    }
+    request.flash('loginError', request.user);
+    res.redirect('/auth#login');
+  }
+
+  // @UseGuards(AuthGuard('jwt'))
+  @Get('logout')
+  async logout(@Res() res: Response) {
+    res.clearCookie('Authentication');
     res.redirect('/');
   }
 
@@ -49,4 +62,3 @@ export class AuthController {
     }
   }
 }
-  

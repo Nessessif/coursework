@@ -13,7 +13,8 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
+
   async render(loginError: string, registerError: string) {
     return {
       title: 'Авторизация',
@@ -24,24 +25,20 @@ export class AuthService {
     };
   }
 
-  // async getError(@Req() req) {
-  //   return req.flash('loginError'),
-  // }
-
-  async validateUser(email: string, password: string): Promise<User | null> {
+  async validateUser(email: string, password: string): Promise<User | string> {
     const user = await this.usersRepository.getByEmail(email);
 
     if (!user) {
-      return null;
+      return 'Нет такого пользователя';
     }
-    if (bcrypt.compare(password, user.password)) {
+    if (await bcrypt.compare(password, user.password)) {
       return user;
     }
-    return null;
+    return 'Не корректно введены данные';
   }
 
   async login(user: User): Promise<{ access_token: string }> {
-    const payload = { sub: user._id, email: user.email };
+    const payload = { sub: user._id };
     return {
       access_token: this.jwtService.sign(payload),
     };

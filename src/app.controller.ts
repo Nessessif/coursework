@@ -1,15 +1,14 @@
-import { Controller, Get, Render, Res } from '@nestjs/common';
+import { Controller, Get, Render, Req, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   @Render('index')
-  render() {
-    return this.appService.render();
+  render(@Req() req) {
+    return this.appService.render(req.cookies['Authentication']);
   }
 }
-
