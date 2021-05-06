@@ -13,4 +13,5 @@ abstract class Announcement {
   price: number;
   currency: string;
   photos: string[];
+  isBanned: boolean;
 }
