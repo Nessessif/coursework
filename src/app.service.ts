@@ -4,17 +4,14 @@ import { UsersRepository } from './users/users.repository';
 @Injectable()
 export class AppService {
   constructor(private usersRepository: UsersRepository) {}
-  render(isAuth) {
-    // const user = this.usersRepository.getUserById(isAuth);
-    // console.log(user);
-
+  async render(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
     return {
       title: 'Главная страница',
       message: 'dsfdsf',
       isHome: true,
       layout: 'layouts/main',
-      isAuth,
-      // user,
+      user,
     };
   }
 }
