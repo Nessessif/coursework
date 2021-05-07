@@ -1,8 +1,24 @@
-class saleAnnouncement extends Announcement implements SaleInterface {
-  ownership: string;
-  roomsCount: string;
+import { AnnouncementDto } from "../dto/announcement.dto";
+import { Announcement } from "./abstract-announcement";
 
-  constructor() {
-    super();
-  }
+export class SaleAnnouncement extends Announcement {
+
+  roomsCount: string;
+  ownership: string;
+
+  constructor(dto: AnnouncementDto) {
+    super(dto);
+
+    this.roomsCount = dto.roomsCount;
+    this.ownership = dto.ownership;
+  };
+
+  // async add(): string {
+
+  // }
+
 }
+
+
+
+

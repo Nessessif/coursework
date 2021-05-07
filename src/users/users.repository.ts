@@ -29,6 +29,6 @@ export class UsersRepository {
   }
 
   async getUserById(_id: string): Promise<UserDoc> {
-    return this.userModel.findById(_id);
+    return await this.userModel.findById(Types.ObjectId(_id));
   }
 }
