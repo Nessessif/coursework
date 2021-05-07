@@ -20,8 +20,11 @@ export class User {
   @Prop({ required: false })
   password: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'ad' }] })
-  ad: Types.ObjectId[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Sale' }] })
+  salesId: Types.ObjectId[];
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Rent' }] })
+  rentsId: Types.ObjectId[];
 
   @Prop({ required: true, default: false })
   banned: boolean;
