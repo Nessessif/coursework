@@ -7,17 +7,21 @@ import { SaleAnnouncement } from './structure/sale-announcement';
 export class SaleRepository {
   constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) {}
 
-  async getSales(): Promise<SaleDoc>;
+  async getSales(count: number, skip: number): Promise<SaleDoc>;
   // return await this.saleModel.find().lean();
 
   async getSales(count: number): Promise<SaleDoc>;
   // return await this.saleModel.find().lean();
 
-  async getSales(count?: number): Promise<SaleDoc> {
-    if (count) {
-      return await this.saleModel.find().limit(count).lean();
+  async getSales(count: number, skip?: number): Promise<SaleDoc> {
+    if (skip) {
+      return await this.saleModel
+        .find()
+        .skip(skip * count)
+        .limit(count)
+        .lean();
     } else {
-      return await this.saleModel.find().lean();
+      return await this.saleModel.find().limit(count).lean();
     }
   }
 
@@ -26,6 +30,10 @@ export class SaleRepository {
   //         email: email,
   //     });
   // }
+
+  async getCount() {
+    // return await this.saleModel.count();
+  }
 
   async add(announcement: SaleAnnouncement) {
     return await this.saleModel.create({

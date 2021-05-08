@@ -32,6 +32,20 @@ export class AnnouncementService {
     };
   }
 
+  async renderAllSales(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
+    const sales = await this.saleRepository.getSales(8);
+    // const count = Math.ceil(await this.saleRepository.getCount());
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isSales: true,
+      sales,
+      user,
+      // count,
+    };
+  }
+
   async add(dto: AnnouncementDto): Promise<string> {
     if (dto.type === 'rent') {
       let announcement = new RentAnnouncement(dto);
