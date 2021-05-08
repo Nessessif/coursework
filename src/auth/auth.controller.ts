@@ -19,8 +19,10 @@ export class AuthController {
 
   @Get()
   @Render('auth')
-  async render(@Req() req) {
-    req.cookies['Authentication'];
+  async render(@Req() req, @Res() res: Response) {
+    if (req.cookies['Authentication'] || req.cookies['Admin']) {
+      res.redirect('/');
+    }
 
     return this.authService.render(
       req.flash('loginError'),
