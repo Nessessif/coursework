@@ -1,3 +1,78 @@
-<h1>Добро пожаловать</h1>
 
-<p>Здесь есть курсач {{message}}</p>
+{{!-- {{#ifCond sales.length rents.length}} --}}
+    {{!-- <h1>Объявлений нет</h1> --}}
+{{!-- {{else}} --}}
+    {{!-- <h1>Объявлений нет</h1> --}}
+{{!-- {{/ifCond}} --}}
+
+
+{{#if sales.length}}
+  <h1>Продажа квартир</h1>  
+  <div class="card__wrapper row">
+  {{#each sales }}
+    <div class="card__wrapper-inner col s6">
+      <div class="card sticky-action" style="overflow: hidden;">
+        <div class="card-image waves-effect waves-block waves-light ">
+          <img class="activator" src="https://global-uploads.webflow.com/5ef5480befd392489dacf544/5f9f5e5943de7e69a1339242_5f44a7398c0cdf460857e744_img-image.jpeg">
+        </div>
+        <div class="card-content">
+          <p>Минск, {{street}}</p>
+          <span>{{roomsCount}}</span>
+          <span>{{livingArea}} м2</span>
+          <span>{{floor}}/{{countOfFloors}} этаж</span>
+          <span class="card-title activator grey-text text-darken-4">
+            <i class="material-icons right">more_vert</i>
+          </span>
+
+          <p><a href="#">Позвонить</a></p>
+        </div>
+
+        <div class="card-action">
+          <a href="#">Перейти к объявлению</a>
+        </div>
+
+        <div class="card-reveal" style="display: block; transform: translateY(-100%);">
+          <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>
+          <p>{{description}}</p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<hr>
+{{/if}}
+
+{{#if rents}}
+  <h1>Аренда квартир</h1>  
+  <div class="card__wrapper row">
+  {{#each rents }}
+    <div class="card__wrapper-inner col s6">
+      <div class="card sticky-action" style="overflow: hidden;">
+        <div class="card-image waves-effect waves-block waves-light ">
+          <img class="activator" src="https://global-uploads.webflow.com/5ef5480befd392489dacf544/5f9f5e5943de7e69a1339242_5f44a7398c0cdf460857e744_img-image.jpeg">
+        </div>
+        <div class="card-content">
+          <p>Минск, {{street}}</p>
+          <span>{{typeOfRent}}</span>
+          <span>{{livingArea}} м2</span>
+          <span>{{floor}}/{{countOfFloors}} этаж</span>
+          <span class="card-title activator grey-text text-darken-4">
+            <i class="material-icons right">more_vert</i>
+          </span>
+
+          <p><a href="#">Позвонить</a></p>
+        </div>
+
+        <div class="card-action">
+          <a href="#">Перейти к объявлению</a>
+        </div>
+
+        <div class="card-reveal" style="display: block; transform: translateY(-100%);">
+          <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>
+          <p>{{description}}</p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+{{/if}}

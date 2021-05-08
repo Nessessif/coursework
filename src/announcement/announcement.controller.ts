@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Render,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import { AnnouncementService } from './announcement.service';
 import { Response, Request } from 'express';
 import { AnnouncementDto } from './dto/announcement.dto';
@@ -17,21 +9,25 @@ import { RentAnnouncement } from './structure/rent-announcement';
 
 @Controller('announcement')
 export class AnnouncementController {
-  constructor(private readonly announcementService: AnnouncementService,) { }
+  constructor(private readonly announcementService: AnnouncementService) {}
 
   @Get('sale')
   @Render('sale')
-  renderSale(@Req() req) {
+  renderSale(@Req() req, @Res() res: Response) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
     return this.announcementService.renderSale(req.cookies['Authentication']);
   }
 
   @Get('rent')
   @Render('rent')
-  renderRent(@Req() req) {
+  renderRent(@Req() req, @Res() res: Response) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
     return this.announcementService.renderRent(req.cookies['Authentication']);
   }
-
-
 
   @Post('add')
   async addAnnouncement(
@@ -47,5 +43,4 @@ export class AnnouncementController {
       res.redirect('/');
     }
   }
-
 }
