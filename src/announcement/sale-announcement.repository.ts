@@ -5,7 +5,7 @@ import { Sale, SaleDoc } from './sales.shema';
 import { SaleAnnouncement } from './structure/sale-announcement';
 
 export class SaleRepository {
-  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) { }
+  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) {}
 
   async getSales(count: number, skip: number): Promise<SaleDoc>;
   // return await this.saleModel.find().lean();
@@ -17,7 +17,7 @@ export class SaleRepository {
     if (skip) {
       return await this.saleModel
         .find()
-        .skip(skip * count)
+        .skip((skip - 1) * count)
         .limit(count)
         .lean();
     } else {
@@ -32,7 +32,7 @@ export class SaleRepository {
   // }
 
   async getCount() {
-    // return await this.saleModel.count();
+    return await this.saleModel.countDocuments();
   }
 
   async add(announcement: SaleAnnouncement) {

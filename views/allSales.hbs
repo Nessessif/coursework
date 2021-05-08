@@ -4,9 +4,10 @@
   <div class="card__wrapper row">
   {{#each sales }}
     {{> cardSale}}
-    {{count}}
   {{/each}}
 </div>
+<ul id="pagination" class="pagination" data-pages="{{countPage}}">
+  </ul>
 {{else}}
  <h1>Товаров для продажи нет</h1>
 {{/if}}

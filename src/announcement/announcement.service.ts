@@ -12,7 +12,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -32,17 +32,22 @@ export class AnnouncementService {
     };
   }
 
+  async getMoreSales(skip) {
+    return await this.saleRepository.getSales(8, +skip);
+  }
+
   async renderAllSales(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
     const sales = await this.saleRepository.getSales(8);
-    // const count = Math.ceil(await this.saleRepository.getCount());
+    const countPage = await this.saleRepository.getCount();
+
     return {
       title: 'Продажа квартиры',
       layout: 'layouts/main',
       isSales: true,
       sales,
       user,
-      // count,
+      countPage: Math.ceil(countPage / 8),
     };
   }
 
@@ -58,7 +63,4 @@ export class AnnouncementService {
     }
     return 'error';
   }
-
-
-
 }

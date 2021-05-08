@@ -32,7 +32,16 @@ export class AnnouncementController {
   @Get('sales')
   @Render('allSales')
   renderAllSales(@Req() req) {
-    return this.announcementService.renderAllSales(req.cookies['Authentication']);
+    return this.announcementService.renderAllSales(
+      req.cookies['Authentication'],
+    );
+  }
+
+  @Post('getSales')
+  async getMoreSales(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(await this.announcementService.getMoreSales(req.body.page));
   }
 
   @Post('add')
