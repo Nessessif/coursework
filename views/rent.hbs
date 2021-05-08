@@ -1,7 +1,7 @@
 <div id="sale" class="col s10 offset-s1">
-  <h1>Продажа квартиры</h1>
+  <h1>Аренда квартиры</h1>
   <form action="/announcement/add" method="POST">
-    <div class="input-field">
+    {{!-- <div class="input-field">
       <select name="street">
         <option value="" disabled selected>Улица</option>
         <option value="Негра">Негра</option>
@@ -9,14 +9,15 @@
         <option value="Уголька">Уголька</option>
       </select>
       <label>Улица</label>
-    </div>
+    </div> --}}
 
     <div class="input-field">
-      <input id="houseNumber" name="houseNumber" type="number" class="validate" required>
-      <label for="houseNumber">Номер дома</label>
-      <span class="helper-text" data-error="Введите номер дома"></span>
+      <input id="street" name="street" type="text" class="autocomplete">
+      <label for="street">Улица</label>
+      <span class="helper-text" data-error="Введите улицу"></span>
     </div>
 
+    <div id="YMapsID" style="width: 100%; height: 550px;"></div>
 
     <div class="input-field">
       <select name="typeOfRent">
@@ -49,19 +50,19 @@
     </div>
 
     <div class="input-field">
-      <input id="totalArea" name="totalArea" type="number" class="validate" required>
+      <input id="totalArea" name="totalArea" type="number" class="validate" step="0.01" min="1" required>
       <label for="totalArea">Общая площадь</label>
       <span class="helper-text" data-error="Введите общую площадь"></span>
     </div>
 
     <div class="input-field">
-      <input id="livingArea" name="livingArea" type="number" class="validate" required>
+      <input id="livingArea" name="livingArea" type="number" class="validate" step="0.01" min="1" required>
       <label for="livingArea">Жилая площадь</label>
       <span class="helper-text" data-error="Введите жилую площадь"></span>
     </div>
 
     <div class="input-field">
-      <input id="kitchenArea" name="kitchenArea" type="number" class="validate">
+      <input id="kitchenArea" name="kitchenArea" type="number" class="validate" step="0.01" min="1">
       <label for="kitchenArea">Площадь кухни</label>
       <span class="helper-text" data-error="Введите площадь кухни"></span>
     </div>
@@ -81,13 +82,13 @@
     </div>
 
     <div class="input-field">
-      <input id="floor" name="floor" type="number" class="validate">
+      <input id="floor" name="floor" type="number" class="validate" min="1">
       <label for="floor">Этаж</label>
       <span class="helper-text" data-error="Введите этаж"></span>
     </div>
 
     <div class="input-field">
-      <input id="countOfFloors" name="countOfFloors" type="number" class="validate">
+      <input id="countOfFloors" name="countOfFloors" type="number" class="validate" min="1">
       <label for="countOfFloors">Количество этажей</label>
       <span class="helper-text" data-error="Введите количество этажей"></span>
     </div>
@@ -114,7 +115,7 @@
     </div>
 
     <div class="input-field">
-      <input id="price" name="price" type="number" class="validate">
+      <input id="price" name="price" type="number" class="validate" step="0.01" min="1">
       <label for="price">Цена</label>
       <span class="helper-text" data-error="Цена"></span>
     </div>
@@ -130,6 +131,12 @@
     </div>
 
     <div class="photos">
+      <label for="photos">Choose files to upload</label>
+      <input id="photos" name="photos" type="file" multiple accept=".jpg, .jpeg, .png">
+      <div class="preview">
+        <p>No files currently selected for upload</p>
+      </div>
+
       <h2>ТУТ ФОТО</h2>
     </div>
 

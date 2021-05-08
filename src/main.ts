@@ -26,6 +26,13 @@ async function bootstrap() {
   app.use(flash());
   app.use(cookieParser());
 
+  hbs.registerHelper('ifCond', function (v1, v2, options) {
+    if (v1 === v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   await app.listen(process.env.PORT);
   console.log(`start server ${process.env.PORT}`);
 }

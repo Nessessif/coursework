@@ -1,6 +1,5 @@
 export class AnnouncementDto {
     street: string;
-    houseNumber: string;
     totalArea: number;
     livingArea: number;
     kitchenArea: number;
@@ -13,7 +12,6 @@ export class AnnouncementDto {
     typeHouse: string;
     floor: number;
     countOfFloors: number;
-    coordinates: string;
     //============================ Rent
     typeOfRent: string;
     dueDate: string;

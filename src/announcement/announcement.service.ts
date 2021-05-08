@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UsersRepository } from 'src/users/users.repository';
 import { AnnouncementDto } from './dto/announcement.dto';
 import { RentRepository } from './rent-announcement.repository copy';
 import { SaleRepository } from './sale-announcement.repository';
@@ -9,34 +10,41 @@ import { SaleAnnouncement } from './structure/sale-announcement';
 export class AnnouncementService {
   constructor(
     private rentRepository: RentRepository,
-    private saleRepository: SaleRepository) { }
+    private saleRepository: SaleRepository,
+    private usersRepository: UsersRepository,
+  ) { }
 
-  renderSale(isAuth) {
+  async renderSale(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
     return {
       title: 'Продажа квартиры',
       layout: 'layouts/main',
-      isAuth,
+      user,
     };
   }
 
-  renderRent(isAuth) {
+  async renderRent(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
     return {
       title: 'Аренда квартиры',
       layout: 'layouts/main',
-      isAuth,
+      user,
     };
   }
 
   async add(dto: AnnouncementDto): Promise<string> {
-    if (dto.type == 'rent') {
+    if (dto.type === 'rent') {
       let announcement = new RentAnnouncement(dto);
       await this.rentRepository.add(announcement);
       return 'good';
-    } else if (dto.type == 'sale') {
+    } else if (dto.type === 'sale') {
       let announcement = new SaleAnnouncement(dto);
       await this.saleRepository.add(announcement);
       return 'good';
     }
     return 'error';
   }
+
+
+
 }
