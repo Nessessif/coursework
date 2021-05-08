@@ -1,0 +1,12 @@
+
+{{#if sales.length}}
+  <h1>Продажа квартир</h1>  
+  <div class="card__wrapper row">
+  {{#each sales }}
+    {{> cardSale}}
+    {{count}}
+  {{/each}}
+</div>
+{{else}}
+ <h1>Товаров для продажи нет</h1>
+{{/if}}

@@ -29,6 +29,12 @@ export class AnnouncementController {
     return this.announcementService.renderRent(req.cookies['Authentication']);
   }
 
+  @Get('sales')
+  @Render('allSales')
+  renderAllSales(@Req() req) {
+    return this.announcementService.renderAllSales(req.cookies['Authentication']);
+  }
+
   @Post('add')
   async addAnnouncement(
     @Body() dto: AnnouncementDto,

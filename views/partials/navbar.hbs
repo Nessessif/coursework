@@ -8,6 +8,12 @@
     
     <ul id="nav-mobile" class="right hide-on-med-and-down">
 
+    {{#if isSales}}
+      <li class='active'><a href="/announcement/sales">Купить</a></li>
+    {{else}}
+      <li><a href="/announcement/sales">Купить</a></li>
+    {{/if}}
+
     {{#if user}}
 
       <a class="dropdown-trigger btn" href="#" data-target="dropdown1">{{user.username}}</a>
