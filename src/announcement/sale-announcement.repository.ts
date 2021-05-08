@@ -36,6 +36,7 @@ export class SaleRepository {
   }
 
   async add(announcement: SaleAnnouncement) {
+
     return await this.saleModel.create({
       _id: Types.ObjectId(),
       street: announcement.street,

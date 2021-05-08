@@ -46,15 +46,23 @@ export class AnnouncementService {
     };
   }
 
-  async add(dto: AnnouncementDto): Promise<string> {
-    if (dto.type === 'rent') {
-      let announcement = new RentAnnouncement(dto);
-      await this.rentRepository.add(announcement);
-      return 'good';
-    } else if (dto.type === 'sale') {
-      let announcement = new SaleAnnouncement(dto);
-      await this.saleRepository.add(announcement);
-      return 'good';
+  async add(dto: AnnouncementDto, userId: string): Promise<string> {
+    try {
+
+      if (dto.type === 'rent') {
+        let announcement = new RentAnnouncement(dto);
+        const item = await this.rentRepository.add(announcement);
+        this.usersRepository.updateRents(userId, item._id);
+        return 'good';
+      } else if (dto.type === 'sale') {
+        let announcement = new SaleAnnouncement(dto);
+        const item = await this.saleRepository.add(announcement);
+        this.usersRepository.updateSales(userId, item._id);
+        return 'good';
+      }
+    }
+    catch (e) {
+      console.log(e);
     }
     return 'error';
   }

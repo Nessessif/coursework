@@ -129,6 +129,8 @@
       <label>Валюта</label>
     </div>
 
+
+
     {{!-- <div class="input-field photos">
       <input class="box__files" type="file" name="photos" id="file" data-multiple-caption="{count} files selected"
         multiple />
@@ -141,8 +143,27 @@
       <div class="box__error">Error! <span></span>.</div>
     </div> --}}
 
+
+
     <input type="hidden" value="sale" name="type">
 
     <button type="submit" class="btn btn-primary">Разместить объявление</button>
   </form>
+
+
+
+  <form action="/announcement/upload" method="POST">
+
+    <div class="photos">
+      <label for="photos">Choose files to upload</label>
+      <input id="photos" name="photos" type="file">
+      <div id="preview">
+        <p>No files currently selected for upload</p>
+      </div>
+
+      <h2>ТУТ ФОТО</h2>
+    </div>
+    <button type="submit" class="btn btn-primary">Разместить объявление</button>
+  </form>
+
 </div>

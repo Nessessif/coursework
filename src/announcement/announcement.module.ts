@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MulterModule } from '@nestjs/platform-express';
 import { UsersModule } from 'src/users/users.module';
 import { User, UserSchema } from 'src/users/users.schema';
 import { AnnouncementController } from './announcement.controller';
@@ -15,9 +16,12 @@ import { Sale, SaleSchema } from './sales.shema';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Rent.name, schema: RentSchema }]),
     MongooseModule.forFeature([{ name: Sale.name, schema: SaleSchema }]),
+    MulterModule.register({
+      dest: './uploads',
+    }),
   ],
   controllers: [AnnouncementController],
   providers: [AnnouncementService, RentRepository, SaleRepository],
   exports: [AnnouncementService, RentRepository, SaleRepository],
 })
-export class AnnouncementModule {}
+export class AnnouncementModule { }
