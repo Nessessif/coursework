@@ -12,7 +12,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -44,4 +44,7 @@ export class AnnouncementService {
     }
     return 'error';
   }
+
+
+
 }

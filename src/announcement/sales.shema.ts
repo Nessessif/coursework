@@ -12,9 +12,6 @@ export class Sale {
     street: string;
 
     @Prop({ required: true })
-    houseNumber: string;
-
-    @Prop({ required: true })
     totalArea: number;
 
     @Prop({ required: true })
@@ -49,10 +46,6 @@ export class Sale {
 
     @Prop({ required: true })
     countOfFloors: number;
-
-    @Prop({ required: false })
-    coordinates: string;
-
     //=============================================
 
     @Prop({ required: true })

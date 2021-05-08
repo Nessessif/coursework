@@ -5,7 +5,7 @@ import { Sale, SaleDoc } from './sales.shema';
 import { SaleAnnouncement } from './structure/sale-announcement';
 
 export class SaleRepository {
-  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) {}
+  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) { }
 
   async getSales(): Promise<SaleDoc>;
   // return await this.saleModel.find().lean();
@@ -31,7 +31,6 @@ export class SaleRepository {
     return await this.saleModel.create({
       _id: Types.ObjectId(),
       street: announcement.street,
-      houseNumber: announcement.houseNumber,
       totalArea: announcement.totalArea,
       livingArea: announcement.livingArea,
       kitchenArea: announcement.kitchenArea,
@@ -44,7 +43,6 @@ export class SaleRepository {
       typeHouse: announcement.typeHouse,
       floor: announcement.floor,
       countOfFloors: announcement.countOfFloors,
-      coordinates: announcement.coordinates,
       roomsCount: announcement.roomsCount,
       ownership: announcement.ownership,
     });
