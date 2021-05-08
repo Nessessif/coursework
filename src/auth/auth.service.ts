@@ -9,11 +9,12 @@ import { UsersRepository } from 'src/users/users.repository';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   async render(loginError: string, registerError: string) {
     return {
@@ -56,4 +57,8 @@ export class AuthService {
     await this.usersRepository.registerUser(dto);
     return 'good';
   }
+
+
+
+
 }

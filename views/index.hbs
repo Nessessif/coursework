@@ -1,3 +1,26 @@
-<h1>Добро пожаловать</h1>
 
-<p>Здесь есть курсач {{message}}</p>
+{{!-- {{#ifCond sales.length rents.length}} --}}
+    {{!-- <h1>Объявлений нет</h1> --}}
+{{!-- {{else}} --}}
+    {{!-- <h1>Объявлений нет</h1> --}}
+{{!-- {{/ifCond}} --}}
+
+
+{{#if sales.length}}
+  <h1>Продажа квартир</h1>  
+  <div class="card__wrapper row">
+  {{#each sales }}
+    {{> cardSale}}
+  {{/each}}
+</div>
+<hr>
+{{/if}}
+
+{{#if rents}}
+  <h1>Аренда квартир</h1>  
+  <div class="card__wrapper row">
+  {{#each rents }}
+    {{> cardRent}}
+  {{/each}}
+</div>
+{{/if}}

@@ -1,113 +1,147 @@
- <div id="sale" class="col s10 offset-s1">
-    <h1>Продажа квартиры</h1>
-    <form action="/аnnouncement/sale/add" method="POST">
-      
-      <div class="input-field">
-        <select name="street">
-          <option value="" disabled selected>Улица</option>
-          <option value="Негра">Негра</option>
-          <option value="Черножопого">Черножопого</option>
-          <option value="Уголька">Уголька</option>
-        </select>
-        <label>Улица</label>
-      </div>
-      
-      <div class="input-field">
-        <input id="houseNumber" name="houseNumber" type="number" class="validate" required>
-        <label for="houseNumber">Номер дома</label>
-        <span class="helper-text" data-error="Введите номер дома"></span>
+<div id="sale" class="col s10 offset-s1">
+  <h1>Аренда квартиры</h1>
+  <form action="/announcement/add" method="POST">
+    {{!-- <div class="input-field">
+      <select name="street">
+        <option value="" disabled selected>Улица</option>
+        <option value="Негра">Негра</option>
+        <option value="Черножопого">Черножопого</option>
+        <option value="Уголька">Уголька</option>
+      </select>
+      <label>Улица</label>
+    </div> --}}
+
+    <div class="input-field">
+      <input id="street" name="street" type="text" class="autocomplete">
+      <label for="street">Улица</label>
+      <span class="helper-text" data-error="Введите улицу"></span>
+    </div>
+
+    <div id="YMapsID" style="width: 100%; height: 550px;"></div>
+
+    <div class="input-field">
+      <select name="typeOfRent">
+        <option value="" disabled selected>Тип аренды</option>
+        <option value="комната">комната</option>
+        <option value="1 комн. квартира">1 комн. квартира</option>
+        <option value="2 комн. квартира">2 комн. квартира</option>
+        <option value="3 комн. квартира">3 комн. квартира</option>
+        <option value="4 комн. квартира">4 комн. квартира</option>
+        <option value="5 комн. квартира">5 комн. квартира</option>
+        <option value="6 комн. квартира">6 комн. квартира</option>
+        <option value="7 комн. квартира">7 комн. квартира</option>
+        <option value="8 комн. квартира">8 комн. квартира</option>
+      </select>
+      <label>Тип аренды</label>
+    </div>
+
+    <div class="input-field">
+      <select name="dueDate">
+        <option value="" disabled selected>Срок сдачи</option>
+        <option value="сутки/часы">сутки/часы</option>
+        <option value="месяц">месяц</option>
+        <option value="2 месяца">2 месяца</option>
+        <option value="3 месяца">3 месяца</option>
+        <option value="полгода">полгода</option>
+        <option value="год">год</option>
+        <option value="длительный">длительный</option>
+      </select>
+      <label>Срок сдачи</label>
+    </div>
+
+    <div class="input-field">
+      <input id="totalArea" name="totalArea" type="number" class="validate" step="0.01" min="1" required>
+      <label for="totalArea">Общая площадь</label>
+      <span class="helper-text" data-error="Введите общую площадь"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="livingArea" name="livingArea" type="number" class="validate" step="0.01" min="1" required>
+      <label for="livingArea">Жилая площадь</label>
+      <span class="helper-text" data-error="Введите жилую площадь"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="kitchenArea" name="kitchenArea" type="number" class="validate" step="0.01" min="1">
+      <label for="kitchenArea">Площадь кухни</label>
+      <span class="helper-text" data-error="Введите площадь кухни"></span>
+    </div>
+
+    <div class="input-field">
+      <select name="typeHouse">
+        <option value="" disabled selected>Тип дома</option>
+        <option value="панельный">панельный</option>
+        <option value="кирпичный">кирпичный</option>
+        <option value="блок-комнаты">блок-комнаты</option>
+        <option value="монолитный">монолитный</option>
+        <option value="каркасно-блочный">каркасно-блочный</option>
+        <option value="силикатные блоки">силикатные блоки</option>
+        <option value="бревенчатый">бревенчатый</option>
+      </select>
+      <label>Тип дома</label>
+    </div>
+
+    <div class="input-field">
+      <input id="floor" name="floor" type="number" class="validate" min="1">
+      <label for="floor">Этаж</label>
+      <span class="helper-text" data-error="Введите этаж"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="countOfFloors" name="countOfFloors" type="number" class="validate" min="1">
+      <label for="countOfFloors">Количество этажей</label>
+      <span class="helper-text" data-error="Введите количество этажей"></span>
+    </div>
+
+    <div class="input-field">
+      <select name="balcony">
+        <option value="" disabled selected>Балкон</option>
+        <option value="нет">нет</option>
+        <option value="балкон">балкон</option>
+        <option value="лоджия">лоджия</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="2 балкона">2 балкона</option>
+        <option value="2 лоджии">2 лоджии</option>
+        <option value="2 балкона застекленные">2 балкона застекленные</option>
+        <option value="2 лоджии застекленные">2 лоджии застекленные</option>
+      </select>
+      <label>Балкон</label>
+    </div>
+
+    <div class="input-field">
+      <textarea id="description" name="description" class="materialize-textarea"></textarea>
+      <label for="description">Описание</label>
+    </div>
+
+    <div class="input-field">
+      <input id="price" name="price" type="number" class="validate" step="0.01" min="1">
+      <label for="price">Цена</label>
+      <span class="helper-text" data-error="Цена"></span>
+    </div>
+
+    <div class="input-field">
+      <select name="currency">
+        <option value="" disabled selected>Валюта</option>
+        <option value="BYN">BYN</option>
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+      </select>
+      <label>Валюта</label>
+    </div>
+
+    <div class="photos">
+      <label for="photos">Choose files to upload</label>
+      <input id="photos" name="photos" type="file" multiple accept=".jpg, .jpeg, .png">
+      <div id="preview">
+        <p>No files currently selected for upload</p>
       </div>
 
+      <h2>ТУТ ФОТО</h2>
+    </div>
 
-      <div class="input-field">
-        <select name="typeOfRent">
-          <option value="" disabled selected>Тип аренды</option>
-          <option value="комната">комната</option>
-          <option value="1 комн. квартира">1 комн. квартира</option>
-          <option value="2 комн. квартира">2 комн. квартира</option>
-          <option value="3 комн. квартира">3 комн. квартира</option>
-          <option value="4 комн. квартира">4 комн. квартира</option>
-          <option value="5 комн. квартира">5 комн. квартира</option>
-          <option value="6 комн. квартира">6 комн. квартира</option>
-          <option value="7 комн. квартира">7 комн. квартира</option>
-          <option value="8 комн. квартира">8 комн. квартира</option>
-        </select>
-        <label>Тип аренды</label>
-      </div>
+    <input type="hidden" value="rent" name="type">
 
-      <div class="input-field">
-        <select name="dueDate">
-          <option value="" disabled selected>Срок сдачи</option>
-          <option value="сутки/часы">сутки/часы</option>
-          <option value="месяц">месяц</option>
-          <option value="2 месяца">2 месяца</option>
-          <option value="3 месяца">3 месяца</option>
-          <option value="полгода">полгода</option>
-          <option value="год">год</option>
-          <option value="длительный">длительный</option>
-        </select>
-        <label>Срок сдачи</label>
-      </div>
-
-      <div class="input-field">
-        <input id="totalArea" name="totalArea" type="number" class="validate" required>
-        <label for="totalArea">Общая площадь</label>
-        <span class="helper-text" data-error="Введите общую площадь"></span>
-      </div>
-
-      <div class="input-field">
-        <input id="livingArea" name="livingArea" type="number" class="validate" required>
-        <label for="livingArea">Жилая площадь</label>
-        <span class="helper-text" data-error="Введите жилую площадь"></span>
-      </div>
-
-      <div class="input-field">
-        <input id="kitchenArea" name="kitchenArea" type="number" class="validate">
-        <label for="kitchenArea">Площадь кухни</label>
-        <span class="helper-text" data-error="Введите площадь кухни"></span>
-      </div>
-
-      <div class="input-field">
-        <select name="balcony">
-          <option value="" disabled selected>Балкон</option>
-          <option value="нет">нет</option>
-          <option value="балкон">балкон</option>
-          <option value="лоджия">лоджия</option>
-          <option value="балкон застекленный">балкон застекленный</option>
-          <option value="балкон застекленный">балкон застекленный</option>
-          <option value="2 балкона">2 балкона</option>
-          <option value="2 лоджии">2 лоджии</option>
-          <option value="2 балкона застекленные">2 балкона застекленные</option>
-          <option value="2 лоджии застекленные">2 лоджии застекленные</option>
-        </select>
-        <label>Балкон</label>
-      </div>
-
-      <div class="input-field">
-        <textarea id="description" name="description" class="materialize-textarea"></textarea>
-        <label for="description">Описание</label>
-      </div>
-
-      <div class="input-field">
-        <input id="price" name="price" type="number" class="validate">
-        <label for="price">Цена</label>
-        <span class="helper-text" data-error="Цена"></span>
-      </div>
-
-      <div class="input-field">
-        <select name="currency">
-          <option value="" disabled selected>Валюта</option>
-          <option value="BYN">BYN</option>
-          <option value="EUR">EUR</option>
-          <option value="USD">USD</option>
-        </select>
-        <label>Валюта</label>
-      </div>
-
-      <div class="photos">
-        <h2>ТУТ ФОТО</h2>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Разместить объявление</button>
-    </form>
-  </div>
+    <button type="submit" class="btn btn-primary">Разместить объявление</button>
+  </form>
+</div>

@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 
 export class UsersRepository {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) { }
 
   async getAllUsers(): Promise<UserDoc> {
     return await this.userModel.find().lean();
@@ -16,6 +16,14 @@ export class UsersRepository {
     return await this.userModel.findOne({
       email: email,
     });
+  }
+
+  async updateSales(_id: string, saleId: string) {
+    return await this.userModel.findOneAndUpdate({ _id: Types.ObjectId(_id) }, { $push: { salesId: [Types.ObjectId(saleId)] } }, { new: true, useFindAndModify: false });
+  }
+
+  async updateRents(_id: string, rentId: string) {
+    return await this.userModel.findOneAndUpdate({ _id: Types.ObjectId(_id) }, { $push: { rentsId: [Types.ObjectId(rentId)] } }, { new: true, useFindAndModify: false });
   }
 
   async registerUser(dto: RegisterUserDto) {
