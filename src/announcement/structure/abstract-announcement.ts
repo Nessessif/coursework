@@ -22,7 +22,6 @@ export abstract class Announcement {
 
   constructor(dto: AnnouncementDto) {
     this.street = dto.street;
-    this.houseNumber = dto.houseNumber;
     this.totalArea = dto.totalArea;
     this.livingArea = dto.livingArea;
     this.kitchenArea = dto.kitchenArea;
@@ -35,7 +34,6 @@ export abstract class Announcement {
     this.countOfFloors = dto.countOfFloors;
     this.floor = dto.floor;
     this.isBanned = dto.isBanned;
-    this.coordinates = dto.coordinates;
   }
 
   // abstract add(): string;

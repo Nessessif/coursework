@@ -12,9 +12,6 @@ export class Rent {
     street: string;
 
     @Prop({ required: true })
-    houseNumber: string;
-
-    @Prop({ required: true })
     totalArea: number;
 
     @Prop({ required: true })
@@ -49,9 +46,6 @@ export class Rent {
 
     @Prop({ required: true })
     countOfFloors: number;
-
-    @Prop({ required: false })
-    coordinates: string;
 
     //=============================================
 
