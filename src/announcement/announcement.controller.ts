@@ -119,6 +119,16 @@ export class AnnouncementController {
     return this.announcementService.getRentsByUser(req.cookies['Authentication']);
   }
 
+  @Get('testAllSales')
+  async getAllSales(@Req() req) {
+    return await this.announcementService.getAllSales();
+  }
+
+  @Get('testAllRents')
+  async getAllRents(@Req() req) {
+    return await this.announcementService.getAllRents();
+  }
+
 }
 
 

@@ -39,4 +39,13 @@ export class UsersRepository {
   async getUserById(_id: string): Promise<UserDoc> {
     return await this.userModel.findById(Types.ObjectId(_id));
   }
+
+  async getUserBySaleId(_id: string) {
+    return await this.userModel.findOne({ salesId: Types.ObjectId(_id) });
+  }
+
+  async getUserByRentId(_id: string) {
+    return await this.userModel.findOne({ rentsId: Types.ObjectId(_id) });
+  }
+
 }
