@@ -8,6 +8,13 @@
     
     <ul id="nav-mobile" class="right hide-on-med-and-down">
 
+    {{#if isRents}}
+      <li class='active'><a href="/announcement/rents">Арендовать</a></li>
+    {{else}}
+      <li><a href="/announcement/rents">Арендовать</a></li>
+    {{/if}}
+
+
     {{#if isSales}}
       <li class='active'><a href="/announcement/sales">Купить</a></li>
     {{else}}

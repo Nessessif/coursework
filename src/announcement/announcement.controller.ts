@@ -41,7 +41,32 @@ export class AnnouncementController {
   async getMoreSales(@Req() req, @Res() res: Response) {
     res
       .status(200)
-      .json(await this.announcementService.getMoreSales(req.body.page));
+      .json(
+        await this.announcementService.getMoreSales(
+          req.body.skip,
+          req.body.count,
+        ),
+      );
+  }
+
+  @Get('rents')
+  @Render('allRents')
+  renderAllRents(@Req() req) {
+    return this.announcementService.renderAllRents(
+      req.cookies['Authentication'],
+    );
+  }
+
+  @Post('getRents')
+  async getMoreRents(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getMoreRents(
+          req.body.skip,
+          req.body.count,
+        ),
+      );
   }
 
   @Post('add')

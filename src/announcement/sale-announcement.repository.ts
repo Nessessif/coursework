@@ -8,10 +8,8 @@ export class SaleRepository {
   constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) {}
 
   async getSales(count: number, skip: number): Promise<SaleDoc>;
-  // return await this.saleModel.find().lean();
 
   async getSales(count: number): Promise<SaleDoc>;
-  // return await this.saleModel.find().lean();
 
   async getSales(count: number, skip?: number): Promise<SaleDoc> {
     if (skip) {
