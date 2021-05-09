@@ -34,6 +34,7 @@ export class SaleRepository {
   }
 
   async add(announcement: SaleAnnouncement) {
+
     return await this.saleModel.create({
       _id: Types.ObjectId(),
       street: announcement.street,
@@ -54,7 +55,7 @@ export class SaleRepository {
     });
   }
 
-  async getUserById(_id: string): Promise<SaleDoc> {
+  async getSaleById(_id: string): Promise<SaleDoc> {
     return await this.saleModel.findById(Types.ObjectId(_id));
   }
 }
