@@ -13,10 +13,6 @@ export class SaleAnnouncement extends Announcement {
     this.ownership = dto.ownership;
   };
 
-  // async add(): string {
-
-  // }
-
 }
 
 

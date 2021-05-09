@@ -1,6 +1,6 @@
 <div id="sale" class="col s10 offset-s1">
   <h1>Продажа квартиры</h1>
-  <form action="/announcement/add" method="POST">
+  <form action="/announcement/add" method="POST" enctype="multipart/form-data">
 
     {{!-- <div class="input-field">
       <select name="street">
@@ -143,26 +143,18 @@
       <div class="box__error">Error! <span></span>.</div>
     </div> --}}
 
-
-
-    <input type="hidden" value="sale" name="type">
-
-    <button type="submit" class="btn btn-primary">Разместить объявление</button>
-  </form>
-
-
-
-  <form action="/announcement/upload" method="POST">
-
     <div class="photos">
       <label for="photos">Choose files to upload</label>
-      <input id="photos" name="photos" type="file">
+      <input id="photos" name="photos" type="file" multiple>
       <div id="preview">
         <p>No files currently selected for upload</p>
       </div>
 
       <h2>ТУТ ФОТО</h2>
     </div>
+
+    <input type="hidden" value="sale" name="type">
+
     <button type="submit" class="btn btn-primary">Разместить объявление</button>
   </form>
 

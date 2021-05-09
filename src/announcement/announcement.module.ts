@@ -16,9 +16,11 @@ import { Sale, SaleSchema } from './sales.shema';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Rent.name, schema: RentSchema }]),
     MongooseModule.forFeature([{ name: Sale.name, schema: SaleSchema }]),
-    MulterModule.register({
-      dest: './uploads',
-    }),
+    MulterModule.registerAsync({
+      useFactory: () => ({
+        dest: './upload',
+      }),
+    })
   ],
   controllers: [AnnouncementController],
   providers: [AnnouncementService, RentRepository, SaleRepository],
