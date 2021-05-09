@@ -6,7 +6,7 @@ import { Rent, RentDoc } from './rents.shema';
 import { RentAnnouncement } from './structure/rent-announcement';
 
 export class RentRepository {
-  constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) { }
+  constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) {}
 
   async getRents(count: number, skip: number): Promise<RentDoc>;
   // return await this.saleModel.find().lean();
@@ -16,10 +16,18 @@ export class RentRepository {
 
   async getRents(count: number, skip?: number): Promise<RentDoc> {
     if (skip) {
-      return await this.rentModel.find().skip(skip).limit(count).lean();
+      return await this.rentModel
+        .find()
+        .skip((skip - 1) * count)
+        .limit(count)
+        .lean();
     } else {
       return await this.rentModel.find().limit(count).lean();
     }
+  }
+
+  async getCount() {
+    return await this.rentModel.countDocuments();
   }
 
   async add(announcement: RentAnnouncement) {
