@@ -14,11 +14,14 @@
         <span>{{livingArea}} м2</span>
         <span>{{floor}}/{{countOfFloors}} этаж</span>
 
-        <p><a href="#">Позвонить</a></p>
+        {{#if isProfile}}
+        {{else}}
+          <p><a href="#">Позвонить</a></p>
+        {{/if}}
       </div>
 
       <div class="card-action">
-        <a href="#">Перейти к объявлению</a>
+        <a href="/announcement/sale/{{_id}}">Перейти к объявлению</a>
       </div>
 
         <div class="card-reveal" >

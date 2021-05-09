@@ -23,18 +23,11 @@ export class SaleRepository {
     }
   }
 
-  // async getByEmail(email: string): Promise<UserDoc> {
-  //     return await this.userModel.findOne({
-  //         email: email,
-  //     });
-  // }
-
   async getCount() {
     return await this.saleModel.countDocuments();
   }
 
   async add(announcement: SaleAnnouncement) {
-
     return await this.saleModel.create({
       _id: Types.ObjectId(),
       street: announcement.street,
@@ -57,5 +50,9 @@ export class SaleRepository {
 
   async getSaleById(_id: string): Promise<SaleDoc> {
     return await this.saleModel.findById(Types.ObjectId(_id));
+  }
+
+  async removeById(_id: string) {
+    return await this.saleModel.deleteOne({ _id: Types.ObjectId(_id) });
   }
 }

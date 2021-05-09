@@ -1,0 +1,36 @@
+<h1>Редактирование</h1>
+  <form action="/users/edit" method="POST">
+    <div class="input-field">
+      <input id="email" name="email" type="email" class="validate" value="{{user.email}}" required>
+      <label for="email">Email</label>
+      <span class="helper-text" data-error="Введите email"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="username" name="username" type="text" class="validate" value="{{user.username}}" required>
+      <label for="username">ФИО</label>
+      <span class="helper-text" data-error="Введите ваше фио"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="phoneNumber" name="phoneNumber" type="tel" minlength="19" value="{{user.phoneNumber}}" required>
+      <label for="phoneNumber">Номер телефона</label>
+      <span class="helper-text" data-error="Введите номер телефона"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="password" name="password" type="password" class="validate" minlength="8" maxlength="20" required>
+      <label for="password">Пароль</label>
+      <span class="helper-text" data-error="Введите пароль [8-20]"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="confirm" name="confirm" type="password" class="validate" minlength="8" maxlength="20" required>
+      <label for="confirm">Пароль еще раз</label>
+      <span class="helper-text" data-error="Введите пароль повторно [8-20]"></span>
+    </div>
+
+    <input id="_id" name="_id" type="hidden" value="{{user._id}}">
+
+    <button type="submit" class="btn btn-primary">Редактирование</button>
+  </form>

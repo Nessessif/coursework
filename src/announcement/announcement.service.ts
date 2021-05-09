@@ -93,40 +93,6 @@ export class AnnouncementService {
     return 'error';
   }
 
-  async getSalesByUser(_id: string) {
-    const user = await this.usersRepository.getUserById(_id);
-    if (user.salesId.length != 0) {
-      let sales = [];
-      for (const saleId of user.salesId) {
-        let sale = await this.saleRepository.getSaleById(saleId.toHexString());
-        if (sale.photos.length != 0) {
-          sale.photos.forEach(photo => {
-            const oldName = photo;
-            photo = '.uploads/' + oldName;
-          })
-        }
-        sales.push(sale);
-      };
-      return sales;
-    } else return 'Sales is empty'
-  }
 
-  async getRentsByUser(_id: string) {
-    const user = await this.usersRepository.getUserById(_id);
-    if (user.rentsId.length != 0) {
-      let rents = [];
-      for (const rentId of user.rentsId) {
-        let rent = await this.rentRepository.getRentById(rentId.toHexString());
-        if (rent.photos.length != 0) {
-          rent.photos.forEach(photo => {
-            const oldName = photo;
-            photo = '.uploads/' + oldName;
-          })
-        }
-        rents.push(rent);
-      };
-      return rents;
-    } else return 'Rents is empty'
-  }
 
 }

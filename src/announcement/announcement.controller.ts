@@ -109,15 +109,7 @@ export class AnnouncementController {
   }
 
 
-  @Get('testSales')
-  async getSalesUser(@Req() req) {
-    return this.announcementService.getSalesByUser(req.cookies['Authentication']);
-  }
-
-  @Get('testRents')
-  async getRentsUser(@Req() req) {
-    return this.announcementService.getRentsByUser(req.cookies['Authentication']);
-  }
+  
 
 }
 
