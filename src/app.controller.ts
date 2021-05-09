@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get()
   @Render('index')
-  render(@Req() req) {
-    return this.appService.render(req.cookies['Authentication']);
+  async render(@Req() req) {
+    return await this.appService.render(req.cookies['Authentication']);
   }
 }

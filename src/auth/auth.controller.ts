@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Get()
   @Render('auth')
@@ -24,11 +24,12 @@ export class AuthController {
       res.redirect('/');
     }
 
-    return this.authService.render(
+    return await this.authService.render(
       req.flash('loginError'),
       req.flash('registerError'),
     );
   }
+
   @Post('login')
   @UseGuards(AuthGuard('local'))
   async login(@Req() request, @Res() res: Response) {
