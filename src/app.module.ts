@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AdminsModule } from './admins/admins.module';
 import { AnnouncementModule } from './announcement/announcement.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AnnouncementModule } from './announcement/announcement.module';
     UsersModule,
     AdminsModule,
     AnnouncementModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

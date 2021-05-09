@@ -5,7 +5,7 @@ import { Sale, SaleDoc } from './sales.shema';
 import { SaleAnnouncement } from './structure/sale-announcement';
 
 export class SaleRepository {
-  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) {}
+  constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) { }
 
   async getSales(count: number, skip: number): Promise<SaleDoc>;
 
@@ -50,6 +50,10 @@ export class SaleRepository {
 
   async getSaleById(_id: string): Promise<SaleDoc> {
     return await this.saleModel.findById(Types.ObjectId(_id));
+  }
+
+  async getAllSales() {
+    return await this.saleModel.find();
   }
 
   async removeById(_id: string) {

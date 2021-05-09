@@ -111,6 +111,16 @@ export class AnnouncementController {
 
   
 
+  @Get('testAllSales')
+  async getAllSales(@Req() req) {
+    return await this.announcementService.getAllSales();
+  }
+
+  @Get('testAllRents')
+  async getAllRents(@Req() req) {
+    return await this.announcementService.getAllRents();
+  }
+
 }
 
 
