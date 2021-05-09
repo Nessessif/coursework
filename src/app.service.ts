@@ -14,7 +14,6 @@ export class AppService {
     const user = await this.usersRepository.getUserById(isAuth);
     const sales = await this.saleRepository.getSales(8);
     const rents = await this.rentRepository.getRents(8);
-
     return {
       title: 'Главная страница',
       layout: 'layouts/main',

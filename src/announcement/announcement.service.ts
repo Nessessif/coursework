@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -34,17 +34,41 @@ export class AnnouncementService {
     };
   }
 
+  async getMoreSales(skip, count) {
+    return await this.saleRepository.getSales(count, +skip);
+  }
+
   async renderAllSales(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
     const sales = await this.saleRepository.getSales(8);
-    // const count = Math.ceil(await this.saleRepository.getCount());
+    const countPage = await this.saleRepository.getCount();
+
     return {
       title: 'Продажа квартиры',
       layout: 'layouts/main',
       isSales: true,
       sales,
       user,
-      // count,
+      countPage: Math.ceil(countPage / 8),
+    };
+  }
+
+  async getMoreRents(skip, count) {
+    return await this.rentRepository.getRents(count, +skip);
+  }
+
+  async renderAllRents(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
+    const rents = await this.rentRepository.getRents(8);
+    const countPage = await this.rentRepository.getCount();
+
+    return {
+      title: 'Аренда квартиры',
+      layout: 'layouts/main',
+      isRents: true,
+      rents,
+      user,
+      countPage: Math.ceil(countPage / 8),
     };
   }
 
@@ -68,7 +92,6 @@ export class AnnouncementService {
     }
     return 'error';
   }
-
 
   async getSalesByUser(_id: string) {
     const user = await this.usersRepository.getUserById(_id);
@@ -105,6 +128,5 @@ export class AnnouncementService {
       return rents;
     } else return 'Rents is empty'
   }
-
 
 }

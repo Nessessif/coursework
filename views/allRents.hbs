@@ -1,9 +1,9 @@
 
-{{#if sales.length}}
-  <h1>Продажа квартир</h1>  
+{{#if rents.length}}
+  <h1>Аренда квартир</h1>  
   <div class="card__wrapper row">
-  {{#each sales }}
-    {{> cardSale}}
+  {{#each rents }}
+    {{> cardRent}}
   {{/each}}
 </div>
 <div class="row">
@@ -17,5 +17,5 @@
   </div>
 </div>
 {{else}}
- <h1>Товаров для продажи нет</h1>
+ <h1>Товаров для аренды нет</h1>
 {{/if}}
