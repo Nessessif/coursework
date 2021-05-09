@@ -58,4 +58,7 @@ export class RentRepository {
   async getAllRents() {
     return await this.rentModel.find();
   }
+  async removeById(_id: string) {
+    return await this.rentModel.deleteOne({ _id: Types.ObjectId(_id) });
+  }
 }

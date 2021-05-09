@@ -4,9 +4,10 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { User, UserDoc } from './users.schema';
 import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
+import { EditUserDto } from './dto/edit-user.dto';
 
 export class UsersRepository {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) {}
 
   async getAllUsers(): Promise<UserDoc> {
     return await this.userModel.find().lean();
@@ -18,12 +19,24 @@ export class UsersRepository {
     });
   }
 
+  async removeById(_id: string) {
+    return await this.userModel.deleteOne({ _id: Types.ObjectId(_id) });
+  }
+
   async updateSales(_id: string, saleId: string) {
-    return await this.userModel.findOneAndUpdate({ _id: Types.ObjectId(_id) }, { $push: { salesId: [Types.ObjectId(saleId)] } }, { new: true, useFindAndModify: false });
+    return await this.userModel.findOneAndUpdate(
+      { _id: Types.ObjectId(_id) },
+      { $push: { salesId: [Types.ObjectId(saleId)] } },
+      { new: true, useFindAndModify: false },
+    );
   }
 
   async updateRents(_id: string, rentId: string) {
-    return await this.userModel.findOneAndUpdate({ _id: Types.ObjectId(_id) }, { $push: { rentsId: [Types.ObjectId(rentId)] } }, { new: true, useFindAndModify: false });
+    return await this.userModel.findOneAndUpdate(
+      { _id: Types.ObjectId(_id) },
+      { $push: { rentsId: [Types.ObjectId(rentId)] } },
+      { new: true, useFindAndModify: false },
+    );
   }
 
   async registerUser(dto: RegisterUserDto) {
@@ -46,6 +59,20 @@ export class UsersRepository {
 
   async getUserByRentId(_id: string) {
     return await this.userModel.findOne({ rentsId: Types.ObjectId(_id) });
+  }
+
+
+  async editUser(dto: EditUserDto) {
+    return await this.userModel.findOneAndUpdate(
+      { _id: Types.ObjectId(dto._id) },
+      {
+        email: dto.email,
+        password: await bcrypt.hash(dto.password, 10),
+        username: dto.username,
+        phoneNumber: dto.phoneNumber,
+      },
+      { new: true, useFindAndModify: false },
+    );
   }
 
 }
