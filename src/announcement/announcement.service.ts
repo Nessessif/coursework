@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -127,6 +127,78 @@ export class AnnouncementService {
       };
       return rents;
     } else return 'Rents is empty'
+  }
+
+  async getAllSales() {
+    const sales = await this.saleRepository.getAllSales();
+    let salesUsers = [];
+    for (const sale of sales) {
+      const user = await this.usersRepository.getUserBySaleId(sale._id);
+      let saleUser = {
+        _id: sale._id,
+        street: sale.street,
+        totalArea: sale.totalArea,
+        livingArea: sale.livingArea,
+        kitchenArea: sale.kitchenArea,
+        balcony: sale.balcony,
+        description: sale.description,
+        price: sale.price,
+        currency: sale.currency,
+        photos: sale.photos,
+        isBanned: sale.isBanned,
+        typeHouse: sale.typeHouse,
+        floor: sale.floor,
+        countOfFloors: sale.countOfFloors,
+
+        roomsCount: sale.roomsCount,
+        ownership: sale.ownership,
+
+        userId: user._id,
+        email: user.email,
+        username: user.username,
+        phoneNumber: user.phoneNumber,
+        banned: user.banned,
+      };
+
+      salesUsers.push(saleUser);
+    }
+    return salesUsers;
+  }
+
+  async getAllRents() {
+    const rents = await this.rentRepository.getAllRents();
+    let rentsUsers = [];
+    for (const rent of rents) {
+      const user = await this.usersRepository.getUserByRentId(rent._id);
+      let rentUser = {
+        _id: rent._id,
+        street: rent.street,
+        totalArea: rent.totalArea,
+        livingArea: rent.livingArea,
+        kitchenArea: rent.kitchenArea,
+        balcony: rent.balcony,
+        description: rent.description,
+        price: rent.price,
+        currency: rent.currency,
+        photos: rent.photos,
+        isBanned: rent.isBanned,
+        typeHouse: rent.typeHouse,
+        floor: rent.floor,
+        countOfFloors: rent.countOfFloors,
+
+        typeOfRent: rent.typeOfRent,
+        dueDate: rent.dueDate,
+
+        userId: user._id,
+        email: user.email,
+        username: user.username,
+        phoneNumber: user.phoneNumber,
+        banned: user.banned,
+      };
+
+      rentsUsers.push(rentUser);
+    }
+    return rentsUsers;
   }
 
 }
