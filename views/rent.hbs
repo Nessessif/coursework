@@ -1,6 +1,6 @@
 <div id="sale" class="col s10 offset-s1">
   <h1>Аренда квартиры</h1>
-  <form action="/announcement/add" method="POST">
+  <form action="/announcement/add" method="POST" enctype="multipart/form-data">
     {{!-- <div class="input-field">
       <select name="street">
         <option value="" disabled selected>Улица</option>
@@ -132,7 +132,7 @@
 
     <div class="photos">
       <label for="photos">Choose files to upload</label>
-      <input id="photos" name="photos" type="file" multiple accept=".jpg, .jpeg, .png">
+      <input id="photos" name="photos" type="file" multiple>
       <div id="preview">
         <p>No files currently selected for upload</p>
       </div>
