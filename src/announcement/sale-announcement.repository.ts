@@ -57,7 +57,7 @@ export class SaleRepository {
     });
   }
 
-  async getUserById(_id: string): Promise<SaleDoc> {
+  async getSaleById(_id: string): Promise<SaleDoc> {
     return await this.saleModel.findById(Types.ObjectId(_id));
   }
 }

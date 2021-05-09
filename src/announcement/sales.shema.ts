@@ -23,7 +23,7 @@ export class Sale {
     @Prop({ required: true })
     balcony: string;
 
-    @Prop({ required: true })
+    @Prop({ required: false })
     description: string;
 
     @Prop({ required: true })

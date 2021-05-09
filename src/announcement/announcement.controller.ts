@@ -2,16 +2,12 @@ import { Body, Controller, Get, Post, Render, Req, Res, UploadedFile, UploadedFi
 import { AnnouncementService } from './announcement.service';
 import { Response, Request } from 'express';
 import { AnnouncementDto } from './dto/announcement.dto';
-import { Sale } from './sales.shema';
-import { Rent } from './rents.shema';
-import { Announcement } from './structure/abstract-announcement';
-import { RentAnnouncement } from './structure/rent-announcement';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { Observable } from 'rxjs';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 
-import { diskStorage } from "multer";
-import path, { extname } from "path";
 
 @Controller('announcement')
 export class AnnouncementController {
@@ -41,12 +37,34 @@ export class AnnouncementController {
     return this.announcementService.renderAllSales(req.cookies['Authentication']);
   }
 
+
+
   @Post('add')
+  @UseInterceptors(FilesInterceptor('photos', 10, {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, callback) => {
+        const fileExtName = extname(file.originalname);
+        const randomName = Array(8)
+          .fill(null)
+          .map(() => Math.round(Math.random() * 36).toString(36))
+          .join('');
+        callback(null, `${randomName}${fileExtName}`)
+      }
+    })
+  }))
   async addAnnouncement(
     @Body() dto: AnnouncementDto,
     @Req() req,
     @Res() res: Response,
+    @UploadedFiles() photos: Array<Express.Multer.File>,
   ) {
+    const response = [];
+    photos.forEach(file => {
+      const fileReponse = file.filename;
+      response.push(fileReponse);
+    });
+    dto.photos = response;
     const status = await this.announcementService.add(dto, req.cookies['Authentication']);
     if (status === 'good') {
       return res.redirect('/');
@@ -57,12 +75,14 @@ export class AnnouncementController {
   }
 
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('photos'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req,
-    @Res() res: Response,
-  ) {
-    console.log(file);
+  @Get('testSales')
+  async getSalesUser(@Req() req) {
+    return this.announcementService.getSalesByUser(req.cookies['Authentication']);
+  }
+
+  @Get('testRents')
+  async getRentsUser(@Req() req) {
+    return this.announcementService.getRentsByUser(req.cookies['Authentication']);
   }
 
 }
