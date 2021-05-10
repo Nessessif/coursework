@@ -10,23 +10,7 @@
 
     <div id="YMapsID" style="width: 100%; height: 550px;"></div>
 
-    <input type="hidden" id="roomsCount"value="{{sale.roomsCount}}">
-    <div class="input-field input-roomsCount">
-      <select name="roomsCount" >
-        <option value="" disabled selected>Число комнат</option>
-        <option value="1 комн. квартира">1 комн. квартира</option>
-        <option value="2 комн. квартира">2 комн. квартира</option>
-        <option value="3 комн. квартира">3 комн. квартира</option>
-        <option value="4 комн. квартира">4 комн. квартира</option>
-        <option value="5 комн. квартира">5 комн. квартира</option>
-        <option value="6 комн. квартира">6 комн. квартира</option>
-        <option value="7 комн. квартира">7 комн. квартира</option>
-        <option value="8 комн. квартира">8 комн. квартира</option>
-        <option value="9 комн. квартира">9 комн. квартира</option>
-        <option value="10 комн. квартира">10 комн. квартира</option>
-      </select>
-      <label>Число комнат</label>
-    </div>
+  
 
     <div class="input-field">
       <input id="totalArea" name="totalArea" type="number" value="{{sale.totalArea}}" class="validate" step="0.01" min="1" required>
@@ -47,20 +31,6 @@
     </div>
 
     <div class="input-field">
-      <select name="typeHouse">
-        <option value="" disabled selected>Тип дома</option>
-        <option value="панельный">панельный</option>
-        <option value="кирпичный">кирпичный</option>
-        <option value="блок-комнаты">блок-комнаты</option>
-        <option value="монолитный">монолитный</option>
-        <option value="каркасно-блочный">каркасно-блочный</option>
-        <option value="силикатные блоки">силикатные блоки</option>
-        <option value="бревенчатый">бревенчатый</option>
-      </select>
-      <label>Тип дома</label>
-    </div>
-
-    <div class="input-field">
       <input id="floor" name="floor" type="number" value="{{sale.floor}}" class="validate" min="1">
       <label for="floor">Этаж</label>
       <span class="helper-text" data-error="Введите этаж"></span>
@@ -73,36 +43,8 @@
     </div>
 
     <div class="input-field">
-      <select name="balcony">
-        <option value="" disabled selected>Балкон</option>
-        <option value="нет">нет</option>
-        <option value="балкон">балкон</option>
-        <option value="лоджия">лоджия</option>
-        <option value="балкон застекленный">балкон застекленный</option>
-        <option value="балкон застекленный">балкон застекленный</option>
-        <option value="2 балкона">2 балкона</option>
-        <option value="2 лоджии">2 лоджии</option>
-        <option value="2 балкона застекленные">2 балкона застекленные</option>
-        <option value="2 лоджии застекленные">2 лоджии застекленные</option>
-      </select>
-      <label>Балкон</label>
-    </div>
-
-    <div class="input-field">
-      <input type="hidden" id="descriptionText" value="{{sale.description}}" maxlength="1000">
-      <textarea id="description" name="description" class="materialize-textarea"></textarea>
+      <textarea id="description" name="description" class="materialize-textarea">{{sale.description}}</textarea>
       <label for="description">Описание</label>
-    </div>
-
-    <div class="input-field">
-      <select name="ownership">
-        <option value="" disabled selected>Собственность</option>
-        <option value="государственная">государственная</option>
-        <option value="долевое строительство">долевое строительство</option>
-        <option value="частная">частная</option>
-        <option value="жилищные облигации">жилищные облигации</option>
-      </select>
-      <label>Собственность</label>
     </div>
 
     <div class="input-field">
@@ -111,15 +53,6 @@
       <span class="helper-text" data-error="Цена"></span>
     </div>
 
-    <div class="input-field">
-      <select name="currency">
-        <option value="" disabled selected>Валюта</option>
-        <option value="BYN">BYN</option>
-        <option value="EUR">EUR</option>
-        <option value="USD">USD</option>
-      </select>
-      <label>Валюта</label>
-    </div>
 
 
     <div class="photos">
@@ -138,17 +71,3 @@
   </form>
 
 </div>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () { 
-    let value = document.querySelector('#roomsCount').value
-    let id = ''
-    let ids = document.querySelector('.select-wrapper')
-    console.log(ids)
-   
-    // console.log(document.querySelector('#descriptionText').value)
-    document.querySelector('#description').value = document.querySelector('#descriptionText').value
-  
-  })
-</script>

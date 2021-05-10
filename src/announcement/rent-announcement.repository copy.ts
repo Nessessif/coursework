@@ -5,8 +5,10 @@ import { Injectable } from '@nestjs/common';
 import { Rent, RentDoc } from './rents.shema';
 import { RentAnnouncement } from './structure/rent-announcement';
 
+
 export class RentRepository implements AnnouncementInterface {
   constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) { }
+
 
   async getRents(count: number, skip: number): Promise<RentDoc>;
   // return await this.saleModel.find().lean();
