@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const cardGrid = document.querySelector('.card__wrapper')
           let cardHtml = ''
           cards.forEach(el => {
+            console.log(el);
             cardHtml += `<div class="card__wrapper-inner col s6">`
             if (url === '/announcement/getSales/') {
               cardHtml += `<div class="card">`

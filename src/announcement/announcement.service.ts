@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -74,7 +74,6 @@ export class AnnouncementService {
 
   async add(dto: AnnouncementDto, userId: string): Promise<string> {
     try {
-
       if (dto.type === 'rent') {
         let announcement = new RentAnnouncement(dto);
         const item = await this.rentRepository.add(announcement);
@@ -86,14 +85,52 @@ export class AnnouncementService {
         this.usersRepository.updateSales(userId, item._id);
         return 'good';
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
     return 'error';
   }
 
+  async getOneSales(UserId, _id) {
+    const sale = await this.saleRepository.getSaleById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    const userSale = await this.usersRepository.getUserBySaleId(sale._id);
+    let saleUser = {
+      _id: sale._id,
+      street: sale.street,
+      totalArea: sale.totalArea,
+      livingArea: sale.livingArea,
+      kitchenArea: sale.kitchenArea,
+      balcony: sale.balcony,
+      description: sale.description,
+      price: sale.price,
+      currency: sale.currency,
+      photos: sale.photos,
+      isBanned: sale.isBanned,
+      typeHouse: sale.typeHouse,
+      floor: sale.floor,
+      countOfFloors: sale.countOfFloors,
 
+      roomsCount: sale.roomsCount,
+      ownership: sale.ownership,
+
+      userId: userSale._id,
+      email: userSale.email,
+      username: userSale.username,
+      phoneNumber: userSale.phoneNumber,
+      banned: userSale.banned,
+    };
+
+    console.log(saleUser.photos);
+
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      saleUser,
+    };
+  }
 
   async getAllSales() {
     const sales = await this.saleRepository.getAllSales();
@@ -166,5 +203,4 @@ export class AnnouncementService {
     }
     return rentsUsers;
   }
-
 }
