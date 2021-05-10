@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Post, Render, Req, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Render,
+  Req,
+  Res,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AnnouncementService } from './announcement.service';
 import { Response, Request } from 'express';
 import { AnnouncementDto } from './dto/announcement.dto';
@@ -6,8 +18,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-
-
 
 @Controller('announcement')
 export class AnnouncementController {
@@ -71,22 +81,22 @@ export class AnnouncementController {
       );
   }
 
-
-
   @Post('add')
-  @UseInterceptors(FilesInterceptor('photos', 10, {
-    storage: diskStorage({
-      destination: './uploads',
-      filename: (req, file, callback) => {
-        const fileExtName = extname(file.originalname);
-        const randomName = Array(8)
-          .fill(null)
-          .map(() => Math.round(Math.random() * 36).toString(36))
-          .join('');
-        callback(null, `${randomName}${fileExtName}`)
-      }
-    })
-  }))
+  @UseInterceptors(
+    FilesInterceptor('photos', 10, {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, callback) => {
+          const fileExtName = extname(file.originalname);
+          const randomName = Array(8)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 36).toString(36))
+            .join('');
+          callback(null, `${randomName}${fileExtName}`);
+        },
+      }),
+    }),
+  )
   async addAnnouncement(
     @Body() dto: AnnouncementDto,
     @Req() req,
@@ -94,12 +104,15 @@ export class AnnouncementController {
     @UploadedFiles() photos: Array<Express.Multer.File>,
   ) {
     const response = [];
-    photos.forEach(file => {
+    photos.forEach((file) => {
       const fileReponse = file.filename;
       response.push(fileReponse);
     });
     dto.photos = response;
-    const status = await this.announcementService.add(dto, req.cookies['Authentication']);
+    const status = await this.announcementService.add(
+      dto,
+      req.cookies['Authentication'],
+    );
     if (status === 'good') {
       return res.redirect('/');
     } else {
@@ -108,8 +121,26 @@ export class AnnouncementController {
     }
   }
 
+  @Get('sale/:_id')
+  @Render('outSale')
+  async outSales(@Req() req, @Param() params) {
+    return await this.announcementService.getOneSales(
+      req.cookies['Authentication'],
+      params._id,
+    );
+  }
 
-  
+  @Get('sale/edit/:_id')
+  @Render('editSale')
+  async editSales(@Req() req, @Res() res, @Param() params) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
+    return await this.announcementService.getSale(
+      req.cookies['Authentication'],
+      params._id,
+    );
+  }
 
   @Get('testAllSales')
   async getAllSales(@Req() req) {
@@ -121,6 +152,11 @@ export class AnnouncementController {
     return await this.announcementService.getAllRents();
   }
 
+  @Get('sale/:_id/:imgpath')
+  async sendImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
 }
-
-

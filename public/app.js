@@ -205,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function () {
               </div>
             </div>`
           })
-          // console.log(cardHtml);
           cardGrid.innerHTML = cardHtml
         })
     }
@@ -255,9 +254,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       let myGeocoder = ymaps.geocode('Беларусь, Минск ')
-      myGeocoder.then(function (res) {
-        myMap.geoObjects.remove(res.geoObjects)
-      });
+      if (streetInput.value !== '') {
+        myGeocoder = ymaps.geocode(`Беларусь, Минск,  ${streetInput.value}`)
+        myGeocoder.then(function (res) {
+          myMap.geoObjects.add(res.geoObjects)
+        })
+      } else {
+        myGeocoder.then(function (res) {
+          myMap.geoObjects.remove(res.geoObjects)
+        });
+      }
 
       streetInput.addEventListener('blur', (e) => {
         myGeocoder.then(function (res) {

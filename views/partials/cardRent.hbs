@@ -14,15 +14,19 @@
           <span>{{livingArea}} м2</span>
           <span>{{floor}}/{{countOfFloors}} этаж</span>
 
-          {{#if isProfile}}
-          {{else}}
+          {{#if @root.isProfile}}
+            <span></span>
+        {{else}}
           <p><a href="#">Позвонить</a></p>
-          {{/if}}
-        </div>
+        {{/if}}
+      </div>
 
-        <div class="card-action">
-          <a href="#">Перейти к объявлению</a>
-        </div>
+      <div class="card-action">
+        <a href="/announcement/rent/{{_id}}">Перейти к объявлению</a>
+        {{#if @root.isProfile}}
+          <a href="/announcement/rent/edit/{{_id}}">Отредактировать</a>
+          <a href="/announcement/rent/remove/{{_id}}">Удалить</a>
+        {{/if}}
 
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>

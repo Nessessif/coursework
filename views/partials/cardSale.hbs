@@ -14,7 +14,8 @@
         <span>{{livingArea}} м2</span>
         <span>{{floor}}/{{countOfFloors}} этаж</span>
 
-        {{#if isProfile}}
+        {{#if @root.isProfile}}
+            <span></span>
         {{else}}
           <p><a href="#">Позвонить</a></p>
         {{/if}}
@@ -22,6 +23,10 @@
 
       <div class="card-action">
         <a href="/announcement/sale/{{_id}}">Перейти к объявлению</a>
+        {{#if @root.isProfile}}
+          <a href="/announcement/sale/edit/{{_id}}">Отредактировать</a>
+          <a href="/announcement/sale/remove/{{_id}}">Удалить</a>
+        {{/if}}
       </div>
 
         <div class="card-reveal" >

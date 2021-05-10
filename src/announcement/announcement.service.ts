@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { extname } from 'path';
+import path, { extname } from 'path';
 import { UsersRepository } from 'src/users/users.repository';
 import { AnnouncementDto } from './dto/announcement.dto';
 import { RentRepository } from './rent-announcement.repository copy';
@@ -74,7 +74,6 @@ export class AnnouncementService {
 
   async add(dto: AnnouncementDto, userId: string): Promise<string> {
     try {
-
       if (dto.type === 'rent') {
         let announcement = new RentAnnouncement(dto);
         const item = await this.rentRepository.add(announcement);
@@ -86,17 +85,66 @@ export class AnnouncementService {
         this.usersRepository.updateSales(userId, item._id);
         return 'good';
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
     return 'error';
   }
 
+  async getSale(UserId, _id) {
+    const sale = await this.saleRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      sale,
+    };
+  }
 
+  async getOneSales(UserId, _id) {
+    const sale = await this.saleRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    const userSale = await this.usersRepository.getUserBySaleId(sale._id);
+    let saleUser = {
+      _id: sale._id,
+      street: sale.street,
+      totalArea: sale.totalArea,
+      livingArea: sale.livingArea,
+      kitchenArea: sale.kitchenArea,
+      balcony: sale.balcony,
+      description: sale.description,
+      price: sale.price,
+      currency: sale.currency,
+      photos: sale.photos,
+      isBanned: sale.isBanned,
+      typeHouse: sale.typeHouse,
+      floor: sale.floor,
+      countOfFloors: sale.countOfFloors,
+
+      roomsCount: sale.roomsCount,
+      ownership: sale.ownership,
+
+      userId: userSale._id,
+      email: userSale.email,
+      username: userSale.username,
+      phoneNumber: userSale.phoneNumber,
+      banned: userSale.banned,
+    };
+
+
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      saleUser,
+    };
+  }
 
   async getAllSales() {
-    const sales = await this.saleRepository.getAllSales();
+    const sales = await this.saleRepository.getAll();
     let salesUsers = [];
     for (const sale of sales) {
       const user = await this.usersRepository.getUserBySaleId(sale._id);
@@ -132,7 +180,7 @@ export class AnnouncementService {
   }
 
   async getAllRents() {
-    const rents = await this.rentRepository.getAllRents();
+    const rents = await this.rentRepository.getAll();
     let rentsUsers = [];
     for (const rent of rents) {
       const user = await this.usersRepository.getUserByRentId(rent._id);
@@ -167,4 +215,7 @@ export class AnnouncementService {
     return rentsUsers;
   }
 
+  async getFile(id: string): Promise<string> {
+    return path.resolve(__dirname, '..', '..', 'uploads', id)
+  }
 }

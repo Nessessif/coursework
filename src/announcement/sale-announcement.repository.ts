@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { Sale, SaleDoc } from './sales.shema';
 import { SaleAnnouncement } from './structure/sale-announcement';
 
-export class SaleRepository {
+export class SaleRepository implements AnnouncementInterface {
   constructor(@InjectModel(Sale.name) private saleModel: Model<SaleDoc>) { }
 
   async getSales(count: number, skip: number): Promise<SaleDoc>;
@@ -48,11 +48,11 @@ export class SaleRepository {
     });
   }
 
-  async getSaleById(_id: string): Promise<SaleDoc> {
+  async getById(_id: string): Promise<SaleDoc> {
     return await this.saleModel.findById(Types.ObjectId(_id));
   }
 
-  async getAllSales() {
+  async getAll() {
     return await this.saleModel.find();
   }
 
