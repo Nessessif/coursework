@@ -15,7 +15,7 @@ export class UsersService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   async renderProfile(_id) {
     const user = await this.usersRepository.getUserById(_id);
@@ -74,7 +74,7 @@ export class UsersService {
     if (user.salesId.length != 0) {
       let sales = [];
       for (const saleId of user.salesId) {
-        let sale = await this.saleRepository.getSaleById(saleId.toHexString());
+        let sale = await this.saleRepository.getById(saleId.toHexString());
         if (sale.photos.length != 0) {
           sale.photos.forEach((photo) => {
             const oldName = photo;
@@ -92,7 +92,7 @@ export class UsersService {
     if (user.rentsId.length != 0) {
       let rents = [];
       for (const rentId of user.rentsId) {
-        let rent = await this.rentRepository.getRentById(rentId.toHexString());
+        let rent = await this.rentRepository.getById(rentId.toHexString());
         if (rent.photos.length != 0) {
           rent.photos.forEach((photo) => {
             const oldName = photo;

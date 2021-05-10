@@ -1,5 +1,7 @@
 interface AnnouncementInterface {
-
-    add(): string;
+    getCount();
+    getById(_id: string);
+    getAll();
+    removeById(_id: string);
 
 }

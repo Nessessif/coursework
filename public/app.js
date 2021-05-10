@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
             type = 'rent'
           }
           cards.forEach(el => {
-            console.log(el);
             cardHtml += `<div class="card__wrapper-inner col s6">`
             if (type === 'sale') {
               cardHtml += `<div class="card">`
@@ -222,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
               </div>
             </div>`
           })
-          // console.log(cardHtml);
           cardGrid.innerHTML = cardHtml
         })
     }

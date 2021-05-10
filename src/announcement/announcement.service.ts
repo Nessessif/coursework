@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { extname } from 'path';
+import path, { extname } from 'path';
 import { UsersRepository } from 'src/users/users.repository';
 import { AnnouncementDto } from './dto/announcement.dto';
 import { RentRepository } from './rent-announcement.repository copy';
@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -92,7 +92,7 @@ export class AnnouncementService {
   }
 
   async getSale(UserId, _id) {
-    const sale = await this.saleRepository.getSaleById(_id);
+    const sale = await this.saleRepository.getById(_id);
     const user = await this.usersRepository.getUserById(UserId);
     return {
       title: 'Продажа квартиры',
@@ -104,7 +104,7 @@ export class AnnouncementService {
   }
 
   async getOneSales(UserId, _id) {
-    const sale = await this.saleRepository.getSaleById(_id);
+    const sale = await this.saleRepository.getById(_id);
     const user = await this.usersRepository.getUserById(UserId);
     const userSale = await this.usersRepository.getUserBySaleId(sale._id);
     let saleUser = {
@@ -133,7 +133,6 @@ export class AnnouncementService {
       banned: userSale.banned,
     };
 
-    console.log(saleUser.photos);
 
     return {
       title: 'Продажа квартиры',
@@ -145,7 +144,7 @@ export class AnnouncementService {
   }
 
   async getAllSales() {
-    const sales = await this.saleRepository.getAllSales();
+    const sales = await this.saleRepository.getAll();
     let salesUsers = [];
     for (const sale of sales) {
       const user = await this.usersRepository.getUserBySaleId(sale._id);
@@ -181,7 +180,7 @@ export class AnnouncementService {
   }
 
   async getAllRents() {
-    const rents = await this.rentRepository.getAllRents();
+    const rents = await this.rentRepository.getAll();
     let rentsUsers = [];
     for (const rent of rents) {
       const user = await this.usersRepository.getUserByRentId(rent._id);
@@ -214,5 +213,9 @@ export class AnnouncementService {
       rentsUsers.push(rentUser);
     }
     return rentsUsers;
+  }
+
+  async getFile(id: string): Promise<string> {
+    return path.resolve(__dirname, '..', '..', 'uploads', id)
   }
 }
