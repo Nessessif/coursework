@@ -6,7 +6,7 @@ import { Rent, RentDoc } from './rents.shema';
 import { RentAnnouncement } from './structure/rent-announcement';
 
 export class RentRepository {
-  constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) { }
+  constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) {}
 
   async getRents(count: number, skip: number): Promise<RentDoc>;
   // return await this.saleModel.find().lean();
