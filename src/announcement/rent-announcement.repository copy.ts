@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Rent, RentDoc } from './rents.shema';
 import { RentAnnouncement } from './structure/rent-announcement';
 
-export class RentRepository {
+export class RentRepository implements AnnouncementInterface {
   constructor(@InjectModel(Rent.name) private rentModel: Model<RentDoc>) { }
 
   async getRents(count: number, skip: number): Promise<RentDoc>;
@@ -51,11 +51,11 @@ export class RentRepository {
     });
   }
 
-  async getRentById(_id: string): Promise<RentDoc> {
+  async getById(_id: string): Promise<RentDoc> {
     return await this.rentModel.findById(Types.ObjectId(_id));
   }
 
-  async getAllRents() {
+  async getAll() {
     return await this.rentModel.find();
   }
   async removeById(_id: string) {

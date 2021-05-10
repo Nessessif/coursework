@@ -45,43 +45,40 @@
 </div>
 
 <input type="hidden" id="saleId" name="" value="{{saleUser._id}}">
-<div class="zalupa"></div>
+<div class="photosPreview"></div>
 
 
-{{!-- <div class="photosPreview"></div> --}}
 <script>
-  
+  const photos = document.querySelector('#photosValue').value.split(',');
+
+  const list = document.createElement('ol');
+  const preview = document.querySelector('.photosPreview');
+  preview.appendChild(list);
+
+  for (const file of photos) {
+    const listItem = document.createElement('li');
+    const image = document.createElement('img');
+    image.src = `60980067ea61f64f145f8287/${file}`
+    image.style.height = "200px";
+    listItem.appendChild(image);
+    list.appendChild(listItem);
+  }
 
 
-  const photos = document.querySelector('#photosValue').value.split(',')
-//  console.log(photos[0])
-  //console.log(document.getElementById("#negra").src)
 
-
-  let img = document.createElement('img');
-  img.src = `/sale/${document.querySelector('#saleId').value}/${photos[0]}`
-
-  document.querySelector('.zalupa').appendChild(img)
-  
-  
-  // let str = ''
-  // photos.forEach(el => {
-    // str += `<img src="./uploads/${el}">` 
-  // })
-// document.querySelector('.photosPreview').innerHTML = str
 
 
   ymaps.ready(function () {
-      let myMap = new ymaps.Map('YMapsID', {
-        center: [53.9, 27.56],
-        zoom: 11,
-        controls: ['zoomControl', 'typeSelector', 'fullscreenControl']
-      });
-
-      let myGeocoder = ymaps.geocode(`Беларусь, Минск, ${document.querySelector("#coordinate").value}`)
-      myGeocoder.then(function (res) {
-        myMap.geoObjects.add(res.geoObjects)
-      });
-
+    let myMap = new ymaps.Map('YMapsID', {
+      center: [53.9, 27.56],
+      zoom: 11,
+      controls: ['zoomControl', 'typeSelector', 'fullscreenControl']
     });
+
+    let myGeocoder = ymaps.geocode(`Беларусь, Минск, ${document.querySelector("#coordinate").value}`)
+    myGeocoder.then(function (res) {
+      myMap.geoObjects.add(res.geoObjects)
+    });
+
+  });
 </script>

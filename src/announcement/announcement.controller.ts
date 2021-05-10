@@ -21,7 +21,7 @@ import { extname } from 'path';
 
 @Controller('announcement')
 export class AnnouncementController {
-  constructor(private readonly announcementService: AnnouncementService) {}
+  constructor(private readonly announcementService: AnnouncementService) { }
 
   @Get('sale')
   @Render('sale')
@@ -142,13 +142,6 @@ export class AnnouncementController {
     );
   }
 
-  @Get('sale/:_id/:imgpath')
-  seedUploadFile(@Param('imgpath') image, @Res() res) {
-    return res.sendFile(image, {
-      root: 'D:/Code/coursework/uploads',
-    });
-  }
-
   @Get('testAllSales')
   async getAllSales(@Req() req) {
     return await this.announcementService.getAllSales();
@@ -158,4 +151,12 @@ export class AnnouncementController {
   async getAllRents(@Req() req) {
     return await this.announcementService.getAllRents();
   }
+
+  @Get('sale/:_id/:imgpath')
+  async sendImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
 }
