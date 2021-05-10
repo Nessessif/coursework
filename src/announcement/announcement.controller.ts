@@ -130,6 +130,18 @@ export class AnnouncementController {
     );
   }
 
+  @Get('sale/edit/:_id')
+  @Render('editSale')
+  async editSales(@Req() req, @Res() res, @Param() params) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
+    return await this.announcementService.getSale(
+      req.cookies['Authentication'],
+      params._id,
+    );
+  }
+
   @Get('sale/:_id/:imgpath')
   seedUploadFile(@Param('imgpath') image, @Res() res) {
     return res.sendFile(image, {

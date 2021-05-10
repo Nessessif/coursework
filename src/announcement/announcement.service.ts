@@ -91,6 +91,18 @@ export class AnnouncementService {
     return 'error';
   }
 
+  async getSale(UserId, _id) {
+    const sale = await this.saleRepository.getSaleById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      sale,
+    };
+  }
+
   async getOneSales(UserId, _id) {
     const sale = await this.saleRepository.getSaleById(_id);
     const user = await this.usersRepository.getUserById(UserId);

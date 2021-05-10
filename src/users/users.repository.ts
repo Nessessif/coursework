@@ -61,7 +61,6 @@ export class UsersRepository {
     return await this.userModel.findOne({ rentsId: Types.ObjectId(_id) });
   }
 
-
   async editUser(dto: EditUserDto) {
     return await this.userModel.findOneAndUpdate(
       { _id: Types.ObjectId(dto._id) },
@@ -74,5 +73,4 @@ export class UsersRepository {
       { new: true, useFindAndModify: false },
     );
   }
-
 }
