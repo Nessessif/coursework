@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
@@ -74,7 +74,6 @@ export class AnnouncementService {
 
   async add(dto: AnnouncementDto, userId: string): Promise<string> {
     try {
-
       if (dto.type === 'rent') {
         let announcement = new RentAnnouncement(dto);
         const item = await this.rentRepository.add(announcement);
@@ -86,47 +85,63 @@ export class AnnouncementService {
         this.usersRepository.updateSales(userId, item._id);
         return 'good';
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
     return 'error';
   }
 
-  async getSalesByUser(_id: string) {
-    const user = await this.usersRepository.getUserById(_id);
-    if (user.salesId.length != 0) {
-      let sales = [];
-      for (const saleId of user.salesId) {
-        let sale = await this.saleRepository.getSaleById(saleId.toHexString());
-        if (sale.photos.length != 0) {
-          sale.photos.forEach(photo => {
-            const oldName = photo;
-            photo = '.uploads/' + oldName;
-          })
-        }
-        sales.push(sale);
-      };
-      return sales;
-    } else return 'Sales is empty'
+  async getSale(UserId, _id) {
+    const sale = await this.saleRepository.getSaleById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      sale,
+    };
   }
 
-  async getRentsByUser(_id: string) {
-    const user = await this.usersRepository.getUserById(_id);
-    if (user.rentsId.length != 0) {
-      let rents = [];
-      for (const rentId of user.rentsId) {
-        let rent = await this.rentRepository.getRentById(rentId.toHexString());
-        if (rent.photos.length != 0) {
-          rent.photos.forEach(photo => {
-            const oldName = photo;
-            photo = '.uploads/' + oldName;
-          })
-        }
-        rents.push(rent);
-      };
-      return rents;
-    } else return 'Rents is empty'
+  async getOneSales(UserId, _id) {
+    const sale = await this.saleRepository.getSaleById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    const userSale = await this.usersRepository.getUserBySaleId(sale._id);
+    let saleUser = {
+      _id: sale._id,
+      street: sale.street,
+      totalArea: sale.totalArea,
+      livingArea: sale.livingArea,
+      kitchenArea: sale.kitchenArea,
+      balcony: sale.balcony,
+      description: sale.description,
+      price: sale.price,
+      currency: sale.currency,
+      photos: sale.photos,
+      isBanned: sale.isBanned,
+      typeHouse: sale.typeHouse,
+      floor: sale.floor,
+      countOfFloors: sale.countOfFloors,
+
+      roomsCount: sale.roomsCount,
+      ownership: sale.ownership,
+
+      userId: userSale._id,
+      email: userSale.email,
+      username: userSale.username,
+      phoneNumber: userSale.phoneNumber,
+      banned: userSale.banned,
+    };
+
+    console.log(saleUser.photos);
+
+    return {
+      title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      saleUser,
+    };
   }
 
   async getAllSales() {
@@ -200,5 +215,4 @@ export class AnnouncementService {
     }
     return rentsUsers;
   }
-
 }

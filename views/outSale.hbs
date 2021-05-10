@@ -1,0 +1,87 @@
+<h1>Анкета</h1>
+
+<div id="YMapsID" style="width: 100%; height: 550px;"></div>
+<input id="coordinate" type="hidden" name="coordinate" value="{{saleUser.street}}">
+<input id="photosValue" type="hidden" name="photosValue" value="{{saleUser.photos}}">
+
+
+<div class="row s12">
+  <div class="input-field col s4">
+    <input id="totalArea" type="text" disabled value="{{saleUser.totalArea}}">
+    <label for="totalArea">Общая площадь</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="livingArea" type="text" disabled value="{{saleUser.livingArea}}">
+    <label for="livingArea">Жилая площадь</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="kitchenArea" type="text" disabled value="{{saleUser.kitchenArea}}">
+    <label for="kitchenArea">Площадь кухни</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="balcony" type="text" disabled value="{{saleUser.balcony}}">
+    <label for="balcony">Балкон</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="price" type="text" disabled value="{{saleUser.price}}">
+    <label for="price">Цена</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="currency" type="text" value="{{saleUser.currency}}">
+    <label for="currency">Валюта</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="typeHouse" type="text" disabled value="{{saleUser.typeHouse}}">
+    <label for="typeHouse">Тип дома</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="floor" type="text" disabled value="{{saleUser.floor}}">
+    <label for="floor">Этаж</label>
+  </div>
+  <div class="input-field col s4">
+    <input id="countOfFloors" type="text" disabled value="{{saleUser.countOfFloors}}">
+    <label for="countOfFloors">Этажность</label>
+  </div>
+</div>
+
+<input type="hidden" id="saleId" name="" value="{{saleUser._id}}">
+<div class="zalupa"></div>
+
+
+{{!-- <div class="photosPreview"></div> --}}
+<script>
+  
+
+
+  const photos = document.querySelector('#photosValue').value.split(',')
+//  console.log(photos[0])
+  //console.log(document.getElementById("#negra").src)
+
+
+  let img = document.createElement('img');
+  img.src = `/sale/${document.querySelector('#saleId').value}/${photos[0]}`
+
+  document.querySelector('.zalupa').appendChild(img)
+  
+  
+  // let str = ''
+  // photos.forEach(el => {
+    // str += `<img src="./uploads/${el}">` 
+  // })
+// document.querySelector('.photosPreview').innerHTML = str
+
+
+  ymaps.ready(function () {
+      let myMap = new ymaps.Map('YMapsID', {
+        center: [53.9, 27.56],
+        zoom: 11,
+        controls: ['zoomControl', 'typeSelector', 'fullscreenControl']
+      });
+
+      let myGeocoder = ymaps.geocode(`Беларусь, Минск, ${document.querySelector("#coordinate").value}`)
+      myGeocoder.then(function (res) {
+        myMap.geoObjects.add(res.geoObjects)
+      });
+
+    });
+</script>

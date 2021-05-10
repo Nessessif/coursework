@@ -1,0 +1,25 @@
+
+<h1>{{user.username}}</h1>
+<h3>{{user.email}}</h3>
+<h3>{{user.phoneNumber}}</h3>
+
+<a href="/users/edit/{{user._id}}">Редактировать</a>
+<br>
+<a href="/users/remove/{{user._id}}">Удалить</a>
+<div class="col s12" style="margin-top: 50px;">
+  <ul class="tabs">
+    <li class="tab col s6"><a class="active" href="#sales">Продажа</a></li>
+    <li class="tab col s6"><a href="#rents">Аренда</a></li>
+  </ul>
+</div>
+
+<div id="sales">
+  {{#each sales }}
+    {{> cardSale}}
+  {{/each}}
+</div>
+<div id="rents">
+  {{#each rents }}
+    {{> cardRent}}
+  {{/each}}
+</div>
