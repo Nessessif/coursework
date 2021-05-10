@@ -62,12 +62,8 @@
   margin-top: 30px;
 }
 
-/* .input-field.photos {
+.head-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.box__dragndrop,
-.box__uploading,
-.box__success,
-.box__error {
-  display: none;
-} */

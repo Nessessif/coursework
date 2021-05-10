@@ -1,4 +1,135 @@
 
+
+  <div id="filter" class="modal">
+    <div class="modal-content">
+      <h4 style="padding-bottom: 20px;">Параметры</h4>
+      
+    <div class="input-field" style="padding-bottom: 20px;">
+      <select name="roomsCount">
+        <option value="" disabled selected>Число комнат</option>
+        <option value="1 комн. квартира">1 комн. квартира</option>
+        <option value="2 комн. квартира">2 комн. квартира</option>
+        <option value="3 комн. квартира">3 комн. квартира</option>
+        <option value="4 комн. квартира">4 комн. квартира</option>
+        <option value="5 комн. квартира">5 комн. квартира</option>
+        <option value="6 комн. квартира">6 комн. квартира</option>
+        <option value="7 комн. квартира">7 комн. квартира</option>
+        <option value="8 комн. квартира">8 комн. квартира</option>
+        <option value="9 комн. квартира">9 комн. квартира</option>
+        <option value="10 комн. квартира">10 комн. квартира</option>
+      </select>
+      <label>Число комнат</label>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+    <span>Общая площадь</span>
+    <div id="totalArea" class="rangeInput"></div>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+    <span>Жилая площадь</span>
+    <div id="livingArea" class="rangeInput"></div>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+    <span>Площадь кухни</span>
+    <div id="kitchenArea" class="rangeInput"></div>
+    </div>
+
+    <div class="input-field">
+      <select name="typeHouse">
+        <option value="" disabled selected>Тип дома</option>
+        <option value="панельный">панельный</option>
+        <option value="кирпичный">кирпичный</option>
+        <option value="блок-комнаты">блок-комнаты</option>
+        <option value="монолитный">монолитный</option>
+        <option value="каркасно-блочный">каркасно-блочный</option>
+        <option value="силикатные блоки">силикатные блоки</option>
+        <option value="бревенчатый">бревенчатый</option>
+      </select>
+      <label>Тип дома</label>
+    </div>
+
+    <div class="input-field">
+      <select name="balcony">
+        <option value="" disabled selected>Балкон</option>
+        <option value="нет">нет</option>
+        <option value="балкон">балкон</option>
+        <option value="лоджия">лоджия</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="2 балкона">2 балкона</option>
+        <option value="2 лоджии">2 лоджии</option>
+        <option value="2 балкона застекленные">2 балкона застекленные</option>
+        <option value="2 лоджии застекленные">2 лоджии застекленные</option>
+      </select>
+      <label>Балкон</label>
+    </div>
+
+
+    <div class="input-field">
+      <select name="ownership">
+        <option value="" disabled selected>Собственность</option>
+        <option value="государственная">государственная</option>
+        <option value="долевое строительство">долевое строительство</option>
+        <option value="частная">частная</option>
+        <option value="жилищные облигации">жилищные облигации</option>
+      </select>
+      <label>Собственность</label>
+    </div>
+
+    <div>
+    <span>Цена</span>
+    <div id="price" class="rangeInput"></div>
+    </div>
+
+    <input type="hidden" value="sale" name="type">
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-red btn-flat">Закрыть</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Фильтровать</a>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="sort" class="modal">
+    <div class="modal-content" style="padding-bottom: 100px;">
+      <h4>Сортировки</h4>
+      <div class="input-field">
+      <select name="ownership">
+        <option value="от дешевых к дорогим">от дешевых к дорогим</option>
+        <option value="от дорогих к дешевым">от дорогих к дешевым</option>
+      </select>
+      <label>Сортировки</label>
+    </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-red btn-flat">Закрыть</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Сортировать</a>
+    </div>
+  </div>
+<div class="head-panel row" style="margin-top: 40px;">
+  <div class="col s4 ">
+    <a class="waves-effect waves-light btn modal-trigger"  style="min-width: 130px;" href="#filter">Параметры</a>
+  </div>
+  <div class="col s4 ">
+    <a class="waves-effect waves-light btn modal-trigger" style="min-width: 130px;" href="#sort">Сортировки</a>
+  </div>
+  <div class="search-wrapper col s4">
+    <form action="" method="" style="display: flex; align-items: center; justify-content: space-between;">
+      <input id="search" name="search" placeholder="Поиск улицы">
+      <a href="#" style="text-decoration: none;"><i class="material-icons">search</i></a>
+      {{!-- <div class="search-results"></div> --}}
+    </form>
+  </div>
+</div>
+
 {{#if sales.length}}
   <h1>Продажа квартир</h1>  
   <div class="card__wrapper row">

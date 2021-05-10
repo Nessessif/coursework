@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let drop = document.querySelectorAll('.dropdown-trigger');
   M.Dropdown.init(drop);
 
+  M.Modal.init(document.querySelectorAll('.modal'));
+
   let selects = document.querySelectorAll('select');
   M.FormSelect.init(selects);
 
@@ -159,9 +161,15 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((cards) => {
           const cardGrid = document.querySelector('.card__wrapper')
           let cardHtml = ''
+          let type = ''
+          if (url === '/announcement/getSales/') {
+            type = 'sale'
+          } else {
+            type = 'rent'
+          }
           cards.forEach(el => {
             cardHtml += `<div class="card__wrapper-inner col s6">`
-            if (url === '/announcement/getSales/') {
+            if (type === 'sale') {
               cardHtml += `<div class="card">`
             } else {
               cardHtml += `<div class="card rent__card">`
@@ -171,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="card-content">
                   <span class="card-title activator grey-text text-darken-4">`
-            if (url === '/announcement/getSales/') {
+            if (type === 'sale') {
               cardHtml += 'Продажа'
             } else {
               cardHtml += 'Аренда'
@@ -179,17 +187,25 @@ document.addEventListener('DOMContentLoaded', function () {
             cardHtml += `<i class="material-icons right">more_vert</i>
                   </span>
   
-                  <p>Минск, ${el.street}</p>
-                  <span>${el.roomsCount}</span>
-                  <span>${el.livingArea} м2</span>
-                  <span>${el.floor}/${el.countOfFloors} этаж</span>
-  
-                  <p><a href="tel:">Позвонить</a></p>
-                </div>
-  
-                `
+                  <h5>Цена: ${el.price}</h5>`
 
-            if (url === '/announcement/getSales/') {
+            if (type === 'rent') {
+              cardHtml += `<p>Срок аренды: ${el.dueDate}</p>`
+            }
+
+            cardHtml += `<p>Минск, ${el.street}</p>`
+            if (type === 'sale') {
+              cardHtml += `<span>${el.roomsCount}</span>`
+            } else {
+              cardHtml += `<span>${el.typeOfRent}</span>`
+            }
+
+            cardHtml += `
+                  <span>${el.livingArea}м2</span>
+                  <span>${el.floor}/${el.countOfFloors} этаж</span>
+                </div>`
+
+            if (type === 'sale') {
               cardHtml += `<div class="card-action">
                     <a href="/announcement/sale/${el._id}">Перейти к объявлению</a>
                   </div>`
@@ -223,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+  // console.log(window.location.pathname.split('/'));
 
 
 
@@ -361,6 +377,99 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   //========================================
+
+  // editSale
+
+
+  // let selectValue = document.querySelector('#roomsCount').value
+  // let idForSelect = ''
+  // // if (selectValue) {
+  // let a = selects.getSelectedValues()
+  // console.log()
+  // let selectLis = document.querySelector('.input-roomsCount .select-wrapper > ul')
+  // // document.querySelector('.select-dropdown.dropdown-trigger').addEventListener('click', event => {
+  // // console.log(document.querySelector('.input-roomsCount'))
+  // // })
+  // // console.log(`${value}\n${ids}`)
+  // selectLis.childNodes.forEach(el => {
+  //   if (selectValue === el.childNodes[0].innerHTML) {
+  //     console.log(el.id);
+  //     el.classList.add('selected')
+  //     // document.querySelector('.select-dropdown.dropdown-trigger').value = selectValue
+  //   }
+  // })
+  // }
+
+
+
+  // console.log(document.querySelector('form'));
+  // document.querySelector('form').addEventListener('submit', event => {
+  //   event.preventDefault();
+  //   console.log('winner');
+  // })
+
+  const totalAreaRange = document.querySelector('#totalArea.rangeInput');
+  if (totalAreaRange) {
+    noUiSlider.create(totalAreaRange, {
+      start: [1, 300],
+      connect: true,
+      step: 0.1,
+      orientation: 'horizontal', // 'horizontal' or 'vertical'
+      range: {
+        'min': 0,
+        'max': 300
+      },
+
+    });
+  }
+
+  const livingAreaRange = document.querySelector('#livingArea.rangeInput');
+  if (livingAreaRange) {
+    noUiSlider.create(livingAreaRange, {
+      start: [1, 300],
+      connect: true,
+      step: 0.1,
+      orientation: 'horizontal', // 'horizontal' or 'vertical'
+      range: {
+        'min': 0,
+        'max': 300
+      },
+
+    });
+  }
+
+  const kitchenAreaRange = document.querySelector('#kitchenArea.rangeInput');
+  if (kitchenAreaRange) {
+    noUiSlider.create(kitchenAreaRange, {
+      start: [1, 300],
+      connect: true,
+      step: 0.1,
+      orientation: 'horizontal', // 'horizontal' or 'vertical'
+      range: {
+        'min': 0,
+        'max': 300
+      },
+
+    });
+  }
+
+  const priceRange = document.querySelector('#price.rangeInput');
+  if (priceRange) {
+    noUiSlider.create(priceRange, {
+      start: [1, 1000000],
+      connect: true,
+      step: 1,
+      orientation: 'horizontal', // 'horizontal' or 'vertical'
+      range: {
+        'min': 0,
+        'max': 1000000
+      },
+      format: wNumb({
+        decimals: 0
+      })
+
+    });
+  }
 
 
 
