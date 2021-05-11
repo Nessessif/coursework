@@ -120,6 +120,7 @@ export class RentRepository implements AnnouncementInterface {
   }
 
   async delete(announcementId) {
+    console.log('zalupa4');
     return await this.rentModel.findOneAndDelete({ _id: Types.ObjectId(announcementId) })
   }
 

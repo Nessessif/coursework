@@ -614,32 +614,38 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const announcementFilter = document.querySelector('a.waves-green#announcementFilter')
-  announcementFilter.addEventListener('click', (event) => {
-    event.preventDefault();
-    sendForPagesDataFilter(createSalesFilter(), '/announcement/filter/');
-  })
+  if (announcementFilter) {
+    announcementFilter.addEventListener('click', (event) => {
+      event.preventDefault();
+      sendForPagesDataFilter(createSalesFilter(), '/announcement/filter/');
+    })
+  }
 
   const announcementSort = document.querySelector('a.waves-green#announcementSort')
-  announcementSort.addEventListener('click', (event) => {
-    event.preventDefault();
-    let sortData = {}
-    let sortValue = document.querySelector('div.input-field select[name=sortValue]')
-    sortValue = sortValue.options[sortValue.selectedIndex].text;
-    sortData.value = sortValue;
-    sortData.type = document.querySelector('input[name=type]').value;
-    sendForPagesDataFilter(sortData, '/announcement/sort/');
-  })
+  if (announcementSort) {
+    announcementSort.addEventListener('click', (event) => {
+      event.preventDefault();
+      let sortData = {}
+      let sortValue = document.querySelector('div.input-field select[name=sortValue]')
+      sortValue = sortValue.options[sortValue.selectedIndex].text;
+      sortData.value = sortValue;
+      sortData.type = document.querySelector('input[name=type]').value;
+      sendForPagesDataFilter(sortData, '/announcement/sort/');
+    })
+  }
 
 
 
   const announcementSearch = document.querySelector('i#announcementSearch')
-  announcementSearch.addEventListener('click', (event) => {
-    event.preventDefault();
-    let searchData = {}
-    let searchValue = document.querySelector('input#searchValue').value
-    searchData.value = searchValue;
-    searchData.type = document.querySelector('input[name=type]').value;
-    sendForPagesDataFilter(searchData, '/announcement/search/');
-  })
+  if (announcementSearch) {
+    announcementSearch.addEventListener('click', (event) => {
+      event.preventDefault();
+      let searchData = {}
+      let searchValue = document.querySelector('input#searchValue').value
+      searchData.value = searchValue;
+      searchData.type = document.querySelector('input[name=type]').value;
+      sendForPagesDataFilter(searchData, '/announcement/search/');
+    })
+  }
 
 });

@@ -154,12 +154,6 @@ export class AnnouncementController {
     return await this.announcementService.getAllRents();
   }
 
-  @Get('sale/:_id/:imgpath')
-  async sendImage(@Res() res: Response, @Param('imgpath') img) {
-    return res.sendFile(img, {
-      root: 'uploads'
-    });
-  }
 
   @Get('sales/:imgpath')
   async sendImagesSales(@Res() res: Response, @Param('imgpath') img) {
@@ -198,63 +192,97 @@ export class AnnouncementController {
   }
 
 
-  // @Post('sale/edit')
-  // async editSale(
-  //   @Body() dto: AnnouncementDto,
-  //   @Req() req,
-  //   @Res() res: Response,
-  // ) {
-  //   const status = await this.announcementService.edit(
-  //     req.body._id,
-  //     dto,
-  //     req.cookies['Authentication'],
-  //   );
-  //   if (status === 'good') {
-  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
-  //   } else {
-  //     req.flash('registerError', status);
-  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
-  //   }
-  // }
+  @Post('sale/edit')
+  async editSale(
+    @Body() dto: AnnouncementDto,
+    @Req() req,
+    @Res() res: Response,
+  ) {
+    const status = await this.announcementService.edit(
+      req.body._id,
+      dto,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
 
-  // @Post('/rent/edit/')
-  // async editRent(
-  //   @Body() dto: AnnouncementDto,
-  //   @Req() req,
-  //   @Res() res: Response,
-  // ) {
+  @Post('rent/edit')
+  async editRent(
+    @Body() dto: AnnouncementDto,
+    @Req() req,
+    @Res() res: Response,
+  ) {
 
-  //   const status = await this.announcementService.edit(
-  //     req.body._id,
-  //     dto,
-  //     req.cookies['Authentication'],
-  //   );
-  //   if (status === 'good') {
-  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
-  //   } else {
-  //     req.flash('registerError', status);
-  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
-  //   }
-  // }
+    const status = await this.announcementService.edit(
+      req.body._id,
+      dto,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
 
 
-  // @Get('delete/:_id/:type')
-  // async delete(
+  @Get('sale/delete/:_id')
+  async deleteSales(
+    @Req() req,
+    @Res() res: Response,
+    @Param() params,
+  ) {
+    const status = await this.announcementService.deleteSales(
+      params._id,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
+
+  // @Get('rent/delete/:_id')
+  // async deleteRents(
   //   @Req() req,
   //   @Res() res: Response,
   //   @Param() params,
   // ) {
-  //   const status = await this.announcementService.delete(
+  //   console.log(params);
+
+  //   const status = await this.announcementService.deleteRents(
   //     params._id,
-  //     params.type,
   //     req.cookies['Authentication'],
   //   );
   //   if (status === 'good') {
-  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //     return res.redirect('/');
   //   } else {
   //     req.flash('registerError', status);
-  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //     res.redirect('/');
   //   }
   // }
+
+
+  @Get('sale/:_id/:imgpath')
+  async sendImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads',
+    });
+  }
+
+  @Get('rent/:_id/:imgpath')
+  async sendRentImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads',
+    });
+  }
 
 }

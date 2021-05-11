@@ -10,14 +10,15 @@ export class UsersRepository {
   constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) { }
 
   async deleteSale(announcementId, userId) {
-    return await this.userModel.findOneAndUpdate(
+    return await this.userModel.updateOne(
       { _id: Types.ObjectId(userId) },
-      { $pull: { salesId: [Types.ObjectId(announcementId)] } },
+      { $pull: { salesId: Types.ObjectId(announcementId) } },
       { new: true, useFindAndModify: false },
     );
   }
 
   async deleteRent(announcementId, userId) {
+    console.log('zalupa5');
     return await this.userModel.findOneAndUpdate(
       { _id: Types.ObjectId(userId) },
       { $pull: { rentsId: [Types.ObjectId(announcementId)] } },

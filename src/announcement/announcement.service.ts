@@ -247,18 +247,6 @@ export class AnnouncementService {
     }
   }
 
-  async delete(announcementId, type, userId: string) {
-    if (type === 'sale') {
-      await this.saleRepository.delete(announcementId);
-      await this.usersRepository.deleteSale(announcementId, userId);
-      return 'good';
-    } else {
-      await this.rentRepository.delete(announcementId);
-      await this.usersRepository.deleteRent(announcementId, userId);
-      return 'good';
-    }
-  }
-
   async edit(announcementId, dto: AnnouncementDto, userId: string) {
     if (dto.type === 'sale') {
       await this.saleRepository.edit(announcementId, dto);
@@ -269,4 +257,19 @@ export class AnnouncementService {
     }
     return 'error';
   }
+
+
+  async deleteSales(announcementId, userId: string) {
+    await this.saleRepository.delete(announcementId);
+    await this.usersRepository.deleteSale(announcementId, userId);
+    return 'good';
+  }
+
+
+  async deleteRents(announcementId, userId: string) {
+    await this.rentRepository.delete(announcementId);
+    await this.usersRepository.deleteRent(announcementId, userId);
+    return 'good';
+  }
+
 }
