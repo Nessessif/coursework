@@ -16,6 +16,9 @@ export class AnnouncementService {
     private usersRepository: UsersRepository,
   ) { }
 
+
+
+
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
     return {
@@ -217,5 +220,53 @@ export class AnnouncementService {
 
   async getFile(id: string): Promise<string> {
     return path.resolve(__dirname, '..', '..', 'uploads', id)
+  }
+
+
+  async getFilter(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getFilter(filter);
+    } else {
+      return await this.rentRepository.getFilter(filter);
+    }
+  }
+
+  async getSort(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getSort(filter);
+    } else {
+      return await this.rentRepository.getSort(filter);
+    }
+  }
+
+  async getSearch(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getSearch(filter);
+    } else {
+      return await this.rentRepository.getSearch(filter);
+    }
+  }
+
+  async delete(announcementId, type, userId: string) {
+    if (type === 'sale') {
+      await this.saleRepository.delete(announcementId);
+      await this.usersRepository.deleteSale(announcementId, userId);
+      return 'good';
+    } else {
+      await this.rentRepository.delete(announcementId);
+      await this.usersRepository.deleteRent(announcementId, userId);
+      return 'good';
+    }
+  }
+
+  async edit(announcementId, dto: AnnouncementDto, userId: string) {
+    if (dto.type === 'sale') {
+      await this.saleRepository.edit(announcementId, dto);
+      return 'good';
+    } else {
+      await this.rentRepository.edit(announcementId, dto);
+      return 'good';
+    }
+    return 'error';
   }
 }

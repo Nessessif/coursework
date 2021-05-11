@@ -63,4 +63,77 @@ export class RentRepository implements AnnouncementInterface {
   async removeById(_id: string) {
     return await this.rentModel.deleteOne({ _id: Types.ObjectId(_id) });
   }
+
+  async getFilter(filter) {
+    // return await this.saleModel.
+  }
+
+  async getSort(filter) {
+    let announcements = await this.rentModel.find()
+
+    announcements.forEach(el => {
+      if (el.currency === 'BYN') {
+        el.price = el.price * 0.3944;
+      } else if (el.currency === 'EUR') {
+        el.price = el.price * 1.2075;
+      }
+    })
+
+    if (filter.value === 'от дешевых к дорогим') {
+      announcements.sort(function (a, b) {
+        if (a.price > b.price) {
+          return 1;
+        }
+        if (a.price < b.price) {
+          return -1;
+        }
+        return 0;
+      })
+    } else {
+      announcements.sort(function (a, b) {
+        if (a.price < b.price) {
+          return 1;
+        }
+        if (a.price > b.price) {
+          return -1;
+        }
+        return 0;
+      })
+    }
+
+    announcements.forEach(el => {
+      if (el.currency === 'BYN') {
+        el.price = el.price / 0.3944;
+      } else if (el.currency === 'EUR') {
+        el.price = el.price / 1.2075;
+      }
+      el.price = Math.round(el.price);
+    })
+
+    return announcements;
+  }
+
+  async getSearch(filter) {
+    let re = new RegExp(filter.value + "*")
+    let announcements = await this.rentModel.find({ street: re })
+    return announcements;
+  }
+
+  async delete(announcementId) {
+    return await this.rentModel.findOneAndDelete({ _id: Types.ObjectId(announcementId) })
+  }
+
+  async edit(announcementId, dto) {
+    return await this.rentModel.findOneAndUpdate({ _id: Types.ObjectId(announcementId) }, {
+      street: dto.street,
+      totalArea: dto.totalArea,
+      livingArea: dto.livingArea,
+      kitchenArea: dto.kitchenArea,
+      floor: dto.floor,
+      price: dto.price,
+      description: dto.description,
+      countOfFloors: dto.countOfFloors,
+    }, { new: true, useFindAndModify: false })
+  }
+
 }

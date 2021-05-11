@@ -81,6 +81,8 @@ export class AnnouncementController {
       );
   }
 
+
+
   @Post('add')
   @UseInterceptors(
     FilesInterceptor('photos', 10, {
@@ -90,7 +92,7 @@ export class AnnouncementController {
           const fileExtName = extname(file.originalname);
           const randomName = Array(8)
             .fill(null)
-            .map(() => Math.round(Math.random() * 36).toString(36))
+            .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
           callback(null, `${randomName}${fileExtName}`);
         },
@@ -158,5 +160,101 @@ export class AnnouncementController {
       root: 'uploads'
     });
   }
+
+  @Get('sales/:imgpath')
+  async sendImagesSales(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
+  @Get('rents/:imgpath')
+  async sendImagesRents(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
+  @Post('filter')
+  async getFilter(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getFilter(
+          req.body
+        ),
+      );
+  }
+
+  @Post('sort')
+  async getSort(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getSort(
+          req.body
+        ),
+      );
+  }
+
+
+  // @Post('sale/edit')
+  // async editSale(
+  //   @Body() dto: AnnouncementDto,
+  //   @Req() req,
+  //   @Res() res: Response,
+  // ) {
+  //   const status = await this.announcementService.edit(
+  //     req.body._id,
+  //     dto,
+  //     req.cookies['Authentication'],
+  //   );
+  //   if (status === 'good') {
+  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   } else {
+  //     req.flash('registerError', status);
+  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   }
+  // }
+
+  // @Post('/rent/edit/')
+  // async editRent(
+  //   @Body() dto: AnnouncementDto,
+  //   @Req() req,
+  //   @Res() res: Response,
+  // ) {
+
+  //   const status = await this.announcementService.edit(
+  //     req.body._id,
+  //     dto,
+  //     req.cookies['Authentication'],
+  //   );
+  //   if (status === 'good') {
+  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   } else {
+  //     req.flash('registerError', status);
+  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   }
+  // }
+
+
+  // @Get('delete/:_id/:type')
+  // async delete(
+  //   @Req() req,
+  //   @Res() res: Response,
+  //   @Param() params,
+  // ) {
+  //   const status = await this.announcementService.delete(
+  //     params._id,
+  //     params.type,
+  //     req.cookies['Authentication'],
+  //   );
+  //   if (status === 'good') {
+  //     return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   } else {
+  //     req.flash('registerError', status);
+  //     res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+  //   }
+  // }
 
 }
