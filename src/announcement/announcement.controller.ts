@@ -21,7 +21,7 @@ import { extname } from 'path';
 
 @Controller('announcement')
 export class AnnouncementController {
-  constructor(private readonly announcementService: AnnouncementService) { }
+  constructor(private readonly announcementService: AnnouncementService) {}
 
   @Get('sale')
   @Render('sale')
@@ -130,6 +130,15 @@ export class AnnouncementController {
     );
   }
 
+  @Get('rent/:_id')
+  @Render('outRent')
+  async outRents(@Req() req, @Param() params) {
+    return await this.announcementService.getOneRents(
+      req.cookies['Authentication'],
+      params._id,
+    );
+  }
+
   @Get('sale/edit/:_id')
   @Render('editSale')
   async editSales(@Req() req, @Res() res, @Param() params) {
@@ -137,6 +146,18 @@ export class AnnouncementController {
       res.redirect('/');
     }
     return await this.announcementService.getSale(
+      req.cookies['Authentication'],
+      params._id,
+    );
+  }
+
+  @Get('rent/edit/:_id')
+  @Render('editRent')
+  async editRents(@Req() req, @Res() res, @Param() params) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
+    return await this.announcementService.getRent(
       req.cookies['Authentication'],
       params._id,
     );
@@ -155,8 +176,14 @@ export class AnnouncementController {
   @Get('sale/:_id/:imgpath')
   async sendImage(@Res() res: Response, @Param('imgpath') img) {
     return res.sendFile(img, {
-      root: 'uploads'
+      root: 'uploads',
     });
   }
 
+  @Get('rent/:_id/:imgpath')
+  async sendRentImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads',
+    });
+  }
 }
