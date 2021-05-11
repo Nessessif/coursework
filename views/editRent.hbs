@@ -1,0 +1,73 @@
+<div id="rent" class="col s10 offset-s1">
+  <h1>Продажа квартиры</h1>
+  <form action="/announcement/add" method="POST" enctype="multipart/form-data">
+
+    <div class="input-field">
+      <input id="street" name="street" type="text" value="{{rent.street}}" class="autocomplete">
+      <label for="street">Улица</label>
+      <span class="helper-text" data-error="Введите улицу"></span>
+    </div>
+
+    <div id="YMapsID" style="width: 100%; height: 550px;"></div>
+
+  
+
+    <div class="input-field">
+      <input id="totalArea" name="totalArea" type="number" value="{{rent.totalArea}}" class="validate" step="0.01" min="1" required>
+      <label for="totalArea">Общая площадь</label>
+      <span class="helper-text" data-error="Введите общую площадь"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="livingArea" name="livingArea" type="number" value="{{rent.livingArea}}" class="validate" step="0.01" min="1" required>
+      <label for="livingArea">Жилая площадь</label>
+      <span class="helper-text" data-error="Введите жилую площадь"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="kitchenArea" name="kitchenArea" type="number" value="{{rent.kitchenArea}}" class="validate" step="0.01" min="1">
+      <label for="kitchenArea">Площадь кухни</label>
+      <span class="helper-text" data-error="Введите площадь кухни"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="floor" name="floor" type="number" value="{{rent.floor}}" class="validate" min="1">
+      <label for="floor">Этаж</label>
+      <span class="helper-text" data-error="Введите этаж"></span>
+    </div>
+
+    <div class="input-field">
+      <input id="countOfFloors" name="countOfFloors" type="number" value="{{rent.countOfFloors}}" class="validate" min="1">
+      <label for="countOfFloors">Количество этажей</label>
+      <span class="helper-text" data-error="Введите количество этажей"></span>
+    </div>
+
+    <div class="input-field">
+      <textarea id="description" name="description" class="materialize-textarea">{{rent.description}}</textarea>
+      <label for="description">Описание</label>
+    </div>
+
+    <div class="input-field">
+      <input id="price" name="price" type="number" value="{{rent.price}}" class="validate" step="0.01" min="1">
+      <label for="price">Цена</label>
+      <span class="helper-text" data-error="Цена"></span>
+    </div>
+
+
+
+    <div class="photos">
+      <label for="photos">Choose files to upload</label>
+      <input id="photos" name="photos" type="file" multiple>
+      <div id="preview">
+        <p>No files currently selected for upload</p>
+      </div>
+
+      <h2>ТУТ ФОТО</h2>
+    </div>
+
+    <input type="hidden" value="rent" name="type">
+
+    <button type="submit" class="btn btn-primary">Редактировать объявление</button>
+  </form>
+
+</div>

@@ -26,6 +26,13 @@ export class UsersController {
     return this.usersService.renderProfile(params._id);
   }
 
+  @Get('profile/:_id/:imgpath')
+  async sendRentImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads',
+    });
+  }
+
   @Get('edit/:_id')
   @Render('editProfile')
   renderEditProfile(@Req() req, @Res() res: Response, @Param() params) {
