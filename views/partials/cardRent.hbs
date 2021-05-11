@@ -1,20 +1,21 @@
 <div class="card__wrapper-inner col s6">
-      <div class="card rent__card">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center;">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">
-            Аренда
-            <i class="material-icons right">more_vert</i>
-          </span>
-          <h5>Цена: {{price}}</h5>
-          <p>Срок аренды: {{dueDate}}</p>
-          <p>Минск, {{street}}</p>
-          <span>{{typeOfRent}}</span>
-          <span>{{livingArea}}м2</span>
-          <span>{{floor}}/{{countOfFloors}} этаж</span>
-      </div>
+  <div class="card rent__card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator card-image" data-imagepreview="{{photos}}"
+        style="min-height: 350px; background-size: cover; background-position: center;">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">
+        Аренда
+        <i class="material-icons right">more_vert</i>
+      </span>
+      <h5>Цена: {{price}} {{currency}}</h5>
+      <p>Срок аренды: {{dueDate}}</p>
+      <p>Минск, {{street}}</p>
+      <span>{{typeOfRent}}</span>
+      <span>{{livingArea}}м2</span>
+      <span>{{floor}}/{{countOfFloors}} этаж</span>
+    </div>
 
       <div class="card-action">
         <a href="/announcement/rent/{{_id}}" target="_blank">Перейти к объявлению</a>

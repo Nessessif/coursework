@@ -81,6 +81,8 @@ export class AnnouncementController {
       );
   }
 
+
+
   @Post('add')
   @UseInterceptors(
     FilesInterceptor('photos', 10, {
@@ -90,7 +92,7 @@ export class AnnouncementController {
           const fileExtName = extname(file.originalname);
           const randomName = Array(8)
             .fill(null)
-            .map(() => Math.round(Math.random() * 36).toString(36))
+            .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
           callback(null, `${randomName}${fileExtName}`);
         },
@@ -173,12 +175,130 @@ export class AnnouncementController {
     return await this.announcementService.getAllRents();
   }
 
+
+  @Get('sales/:imgpath')
+  async sendImagesSales(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
+  @Get('rents/:imgpath')
+  async sendImagesRents(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads'
+    });
+  }
+
+  @Post('filter')
+  async getFilter(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getFilter(
+          req.body
+        ),
+      );
+  }
+
+  @Post('sort')
+  async getSort(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getSort(
+          req.body
+        ),
+      );
+  }
+
+
+  @Post('sale/edit')
+  async editSale(
+    @Body() dto: AnnouncementDto,
+    @Req() req,
+    @Res() res: Response,
+  ) {
+    const status = await this.announcementService.edit(
+      req.body._id,
+      dto,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
+
+  @Post('rent/edit')
+  async editRent(
+    @Body() dto: AnnouncementDto,
+    @Req() req,
+    @Res() res: Response,
+  ) {
+
+    const status = await this.announcementService.edit(
+      req.body._id,
+      dto,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
+
+
+  @Get('sale/delete/:_id')
+  async deleteSales(
+    @Req() req,
+    @Res() res: Response,
+    @Param() params,
+  ) {
+    const status = await this.announcementService.deleteSales(
+      params._id,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
+
+  // @Get('rent/delete/:_id')
+  // async deleteRents(
+  //   @Req() req,
+  //   @Res() res: Response,
+  //   @Param() params,
+  // ) {
+  //   console.log(params);
+
+  //   const status = await this.announcementService.deleteRents(
+  //     params._id,
+  //     req.cookies['Authentication'],
+  //   );
+  //   if (status === 'good') {
+  //     return res.redirect('/');
+  //   } else {
+  //     req.flash('registerError', status);
+  //     res.redirect('/');
+  //   }
+  // }
+
+
   @Get('sale/:_id/:imgpath')
   async sendImage(@Res() res: Response, @Param('imgpath') img) {
     return res.sendFile(img, {
       root: 'uploads',
     });
   }
+
 
   @Get('rent/:_id/:imgpath')
   async sendRentImage(@Res() res: Response, @Param('imgpath') img) {
