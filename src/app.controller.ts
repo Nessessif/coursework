@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   @Render('index')
@@ -15,7 +15,7 @@ export class AppController {
   @Get(':imgpath')
   async sendImage(@Res() res: Response, @Param('imgpath') img) {
     return res.sendFile(img, {
-      root: 'uploads'
+      root: 'uploads',
     });
   }
 }

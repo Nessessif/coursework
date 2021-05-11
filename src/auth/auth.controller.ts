@@ -15,9 +15,9 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
-  @Get()
+  @Get('login')
   @Render('auth')
   async render(@Req() req, @Res() res: Response) {
     if (req.cookies['Authentication'] || req.cookies['Admin']) {
@@ -40,7 +40,7 @@ export class AuthController {
       res.redirect('/');
     }
     request.flash('loginError', request.user);
-    res.redirect('/auth#login');
+    res.redirect('/auth/login#login');
   }
 
   // @UseGuards(AuthGuard('jwt'))
@@ -58,10 +58,10 @@ export class AuthController {
   ) {
     const status = await this.authService.register(dto, req.body.confirm);
     if (status === 'good') {
-      return res.redirect('/auth#login');
+      return res.redirect('/auth/login#login');
     } else {
       req.flash('registerError', status);
-      res.redirect('/auth#register');
+      res.redirect('/auth/login#register');
     }
   }
 }

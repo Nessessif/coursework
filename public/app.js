@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
   M.FormSelect.init(selects);
 
   let carousel = document.querySelectorAll('.carousel');
-  M.Carousel.init(carousel);
+  M.Carousel.init(carousel, {
+    fullWidth: true,
+    indicators: true
+  });
+
 
   let streetInstance = M.Autocomplete.init(streetInput, {
     data: {}
@@ -174,9 +178,9 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
               cardHtml += `<div class="card rent__card">`
             }
-            cardHtml += `<div class="card-image waves-effect waves-block waves-light ">
-                  <img class="activator" src="https://global-uploads.webflow.com/5ef5480befd392489dacf544/5f9f5e5943de7e69a1339242_5f44a7398c0cdf460857e744_img-image.jpeg">
-                </div>
+            cardHtml += `<div class="card-image waves-effect waves-block waves-light">
+            <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center;">
+          </div>
                 <div class="card-content">
                   <span class="card-title activator grey-text text-darken-4">`
             if (type === 'sale') {
@@ -239,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  // console.log(window.location.pathname.split('/'));
+
 
 
 
@@ -471,6 +475,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-
-
+  const cardPreview = document.querySelectorAll('.card-image')
+  if (cardPreview) {
+    cardPreview.forEach(el => {
+      if (el.dataset.imagepreview !== undefined) {
+        if (window.location.pathname === '/') {
+          el.style.backgroundImage = `url(${el.dataset.imagepreview.split(',')[0]})`
+        } else {
+          el.style.backgroundImage = `url(${window.location.pathname}/${el.dataset.imagepreview.split(',')[0]})`
+        }
+      }
+    })
+  }
 });
