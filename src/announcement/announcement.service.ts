@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
 
 
@@ -106,6 +106,18 @@ export class AnnouncementService {
     };
   }
 
+  async getRent(UserId, _id) {
+    const rent = await this.rentRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    return {
+      title: 'Аренда квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      rent,
+    };
+  }
+
   async getOneSales(UserId, _id) {
     const sale = await this.saleRepository.getById(_id);
     const user = await this.usersRepository.getUserById(UserId);
@@ -136,13 +148,51 @@ export class AnnouncementService {
       banned: userSale.banned,
     };
 
-
     return {
       title: 'Продажа квартиры',
       layout: 'layouts/main',
       isProfile: true,
       user,
       saleUser,
+    };
+  }
+
+  async getOneRents(UserId, _id) {
+    const rent = await this.rentRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    const userRent = await this.usersRepository.getUserByRentId(rent._id);
+    let rentUser = {
+      _id: rent._id,
+      street: rent.street,
+      totalArea: rent.totalArea,
+      livingArea: rent.livingArea,
+      kitchenArea: rent.kitchenArea,
+      balcony: rent.balcony,
+      description: rent.description,
+      price: rent.price,
+      currency: rent.currency,
+      photos: rent.photos,
+      isBanned: rent.isBanned,
+      typeHouse: rent.typeHouse,
+      floor: rent.floor,
+      countOfFloors: rent.countOfFloors,
+
+      typeOfRent: rent.typeOfRent,
+      dueDate: rent.dueDate,
+
+      userId: userRent._id,
+      email: userRent.email,
+      username: userRent.username,
+      phoneNumber: userRent.phoneNumber,
+      banned: userRent.banned,
+    };
+
+    return {
+      title: 'Аренда квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      rentUser,
     };
   }
 
@@ -219,7 +269,7 @@ export class AnnouncementService {
   }
 
   async getFile(id: string): Promise<string> {
-    return path.resolve(__dirname, '..', '..', 'uploads', id)
+    return path.resolve(__dirname, '..', '..', 'uploads', id);
   }
 
 

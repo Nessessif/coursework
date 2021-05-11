@@ -17,16 +17,16 @@
       <span>{{floor}}/{{countOfFloors}} этаж</span>
     </div>
 
-    <div class="card-action">
-      <a href="/announcement/rent/{{_id}}">Перейти к объявлению</a>
-      {{#if @root.isProfile}}
-      <a href="/announcement/rent/edit/{{_id}}">Отредактировать</a>
-      <a href="/announcement/rent/remove/{{_id}}">Удалить</a>
-      {{/if}}
+      <div class="card-action">
+        <a href="/announcement/rent/{{_id}}" target="_blank">Перейти к объявлению</a>
+        {{#if @root.isProfile}}
+          <a href="/announcement/rent/edit/{{_id}}">Отредактировать</a>
+          <a href="/announcement/rent/remove/{{_id}}">Удалить</a>
+        {{/if}}
+      </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>
+          <p>{{description}}</p>
+        </div>
+      </div>
     </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>
-      <p>{{description}}</p>
-    </div>
-  </div>
-</div>

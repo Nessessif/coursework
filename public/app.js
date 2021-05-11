@@ -211,11 +211,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (type === 'sale') {
               cardHtml += `<div class="card-action">
-                    <a href="/announcement/sale/${el._id}">Перейти к объявлению</a>
+                    <a href="/announcement/sale/${el._id}" target="_blank">Перейти к объявлению</a>
                   </div>`
             } else {
               cardHtml += `<div class="card-action">
-              <a href="/announcement/rents/${el._id}">Перейти к объявлению</a>
+              <a href="/announcement/rents/${el._id}" target="_blank">Перейти к объявлению</a>
             </div>`
             }
             cardHtml += `<div class="card-reveal">
