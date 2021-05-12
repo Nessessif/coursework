@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
           } else {
             type = 'rent'
           }
+          let hostname = window.location.pathname.split('/')
           cards.forEach(el => {
             cardHtml += `<div class="card__wrapper-inner col s6">`
             if (type === 'sale') {
@@ -179,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
               cardHtml += `<div class="card rent__card">`
             }
             cardHtml += `<div class="card-image waves-effect waves-block waves-light">
-            <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center;">
+            <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center; background-image: url(${hostname[hostname.length - 1]}/${el.photos.toString().split(',')[0]})">
           </div>
                 <div class="card-content">
                   <span class="card-title activator grey-text text-darken-4">`
