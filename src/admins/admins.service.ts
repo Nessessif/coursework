@@ -76,6 +76,19 @@ export class AdminsService {
         };
     }
 
+    async renderAnswer(_id: string, adminId: string) {
+        const message = await this.messagesRepository.getById(_id);
+        const admin = await this.adminsReporitory.getById(adminId);
+        return {
+            title: 'Its Adminka',
+            isAdmin: true,
+            layout: 'layouts/main',
+            admin,
+            isLogin: true,
+            message
+        };
+    }
+
     async renderAdmin(adminId: string) {
         const admin = await this.adminsReporitory.getById(adminId);
         const users = await this.usersRepository.getAllUsers();

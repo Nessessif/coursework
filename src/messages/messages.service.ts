@@ -25,6 +25,10 @@ export class MessagesService {
         return 'error';
     }
 
+    async deleteById(_id) {
+        return await this.messagesRepository.removeById(_id);
+    }
+
     async getMessages() {
         return await this.messagesRepository.getAll();
     }

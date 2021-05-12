@@ -21,4 +21,12 @@ export class MessagesReporitory {
         return await this.messageModule.find();
     }
 
+    async getById(_id: string): Promise<MessageDoc> {
+        return await this.messageModule.findById(Types.ObjectId(_id));
+    }
+
+    async removeById(_id: string) {
+        return await this.messageModule.deleteOne({ _id: Types.ObjectId(_id) });
+    }
+
 }

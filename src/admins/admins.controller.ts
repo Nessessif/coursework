@@ -49,6 +49,14 @@ export class AdminsController {
         res.redirect('/admin/login');
     }
 
+    @Get('answer/:_id')
+    @Render('supportAnswer')
+    async answer(@Req() req, @Res() res: Response, @Param() params) {
+        return this.adminService.renderAnswer(
+            params._id,
+            req.cookies['Admin'],
+        );
+    }
 
     @Post('login')
     @UseGuards(AuthGuard('admin'))
