@@ -7,6 +7,8 @@ export class MessagesReporitory {
     constructor(@InjectModel(Message.name) private messageModule: Model<MessageDoc>) { }
 
     async add(dto: MessagesDto) {
+        console.log(dto);
+
         return await this.messageModule.create({
             _id: Types.ObjectId(),
             email: dto.email,
@@ -17,6 +19,14 @@ export class MessagesReporitory {
 
     async getAll() {
         return await this.messageModule.find();
+    }
+
+    async getById(_id: string): Promise<MessageDoc> {
+        return await this.messageModule.findById(Types.ObjectId(_id));
+    }
+
+    async removeById(_id: string) {
+        return await this.messageModule.deleteOne({ _id: Types.ObjectId(_id) });
     }
 
 }

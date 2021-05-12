@@ -6,7 +6,7 @@ import { UsersRepository } from './users.repository';
 import { UsersController } from './users.controller';
 import { Rent, RentSchema } from 'src/announcement/rents.shema';
 import { Sale, SaleSchema } from 'src/announcement/sales.shema';
-import { RentRepository } from 'src/announcement/rent-announcement.repository copy';
+import { RentRepository } from 'src/announcement/rent-announcement.repository';
 import { SaleRepository } from 'src/announcement/sale-announcement.repository';
 
 @Module({
@@ -19,4 +19,4 @@ import { SaleRepository } from 'src/announcement/sale-announcement.repository';
   exports: [UsersService, UsersRepository, RentRepository, SaleRepository],
   controllers: [UsersController],
 })
-export class UsersModule {}
+export class UsersModule { }

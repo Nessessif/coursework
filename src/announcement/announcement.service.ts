@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import path, { extname } from 'path';
 import { UsersRepository } from 'src/users/users.repository';
 import { AnnouncementDto } from './dto/announcement.dto';
-import { RentRepository } from './rent-announcement.repository copy';
+import { RentRepository } from './rent-announcement.repository';
 import { SaleRepository } from './sale-announcement.repository';
 import { RentAnnouncement } from './structure/rent-announcement';
 import { SaleAnnouncement } from './structure/sale-announcement';
@@ -16,10 +16,22 @@ export class AnnouncementService {
     private usersRepository: UsersRepository,
   ) { }
 
+
+
+
   async renderSale(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
     return {
       title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      user,
+    };
+  }
+
+  async renderSupport(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
+    return {
+      title: 'Тех поддержка',
       layout: 'layouts/main',
       user,
     };
@@ -103,6 +115,18 @@ export class AnnouncementService {
     };
   }
 
+  async getRent(UserId, _id) {
+    const rent = await this.rentRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    return {
+      title: 'Аренда квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      rent,
+    };
+  }
+
   async getOneSales(UserId, _id) {
     const sale = await this.saleRepository.getById(_id);
     const user = await this.usersRepository.getUserById(UserId);
@@ -133,13 +157,51 @@ export class AnnouncementService {
       banned: userSale.banned,
     };
 
-
     return {
       title: 'Продажа квартиры',
       layout: 'layouts/main',
       isProfile: true,
       user,
       saleUser,
+    };
+  }
+
+  async getOneRents(UserId, _id) {
+    const rent = await this.rentRepository.getById(_id);
+    const user = await this.usersRepository.getUserById(UserId);
+    const userRent = await this.usersRepository.getUserByRentId(rent._id);
+    let rentUser = {
+      _id: rent._id,
+      street: rent.street,
+      totalArea: rent.totalArea,
+      livingArea: rent.livingArea,
+      kitchenArea: rent.kitchenArea,
+      balcony: rent.balcony,
+      description: rent.description,
+      price: rent.price,
+      currency: rent.currency,
+      photos: rent.photos,
+      isBanned: rent.isBanned,
+      typeHouse: rent.typeHouse,
+      floor: rent.floor,
+      countOfFloors: rent.countOfFloors,
+
+      typeOfRent: rent.typeOfRent,
+      dueDate: rent.dueDate,
+
+      userId: userRent._id,
+      email: userRent.email,
+      username: userRent.username,
+      phoneNumber: userRent.phoneNumber,
+      banned: userRent.banned,
+    };
+
+    return {
+      title: 'Аренда квартиры',
+      layout: 'layouts/main',
+      isProfile: true,
+      user,
+      rentUser,
     };
   }
 
@@ -216,6 +278,59 @@ export class AnnouncementService {
   }
 
   async getFile(id: string): Promise<string> {
-    return path.resolve(__dirname, '..', '..', 'uploads', id)
+    return path.resolve(__dirname, '..', '..', 'uploads', id);
   }
+
+
+  async getFilter(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getFilter(filter);
+    } else {
+      return await this.rentRepository.getFilter(filter);
+    }
+  }
+
+  async getSort(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getSort(filter);
+    } else {
+      return await this.rentRepository.getSort(filter);
+    }
+  }
+
+  async getSearch(filter) {
+    if (filter.type === 'sale') {
+      return await this.saleRepository.getSearch(filter);
+    } else {
+      return await this.rentRepository.getSearch(filter);
+    }
+  }
+
+  async edit(announcementId, dto: AnnouncementDto, userId: string) {
+    console.log(dto.type);
+
+    if (dto.type === 'sale') {
+      await this.saleRepository.edit(announcementId, dto);
+      return 'good';
+    } else {
+      await this.rentRepository.edit(announcementId, dto);
+      return 'good';
+    }
+    return 'error';
+  }
+
+
+  async deleteSales(announcementId, userId: string) {
+    await this.saleRepository.delete(announcementId);
+    await this.usersRepository.deleteSale(announcementId, userId);
+    return 'good';
+  }
+
+
+  async deleteRents(announcementId, userId: string) {
+    await this.rentRepository.delete(announcementId);
+    await this.usersRepository.deleteRent(announcementId, userId);
+    return 'good';
+  }
+
 }

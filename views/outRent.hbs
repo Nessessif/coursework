@@ -1,0 +1,153 @@
+
+
+<style>
+  .input-field {
+    margin: 15px 0 !important;
+  }
+</style>
+
+<h1>Анкета</h1>
+
+
+<div class=" photosPreview carousel carousel-slider"></div>
+
+<div class="row s12" style="margin-top: 50px;">
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Общая площадь</legend>
+      <h5 style="margin: 0;">{{rentUser.totalArea}}</h5>
+    </fieldset>
+  </div>
+  
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Жилая площадь</legend>
+      <h5 style="margin: 0;">{{rentUser.livingArea}}</h5>
+    </fieldset>
+  </div>
+
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Площадь кухни</legend>
+      <h5 style="margin: 0;">{{rentUser.kitchenArea}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s8">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Балкон</legend>
+      <h5 style="margin: 0;">{{rentUser.balcony}}</h5>
+    </fieldset>
+  </div>
+
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Цена</legend>
+      <h5 style="margin: 0;">{{rentUser.price}} {{rentUser.currency}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Тип дома</legend>
+      <h5 style="margin: 0;">{{rentUser.typeHouse}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Этаж</legend>
+      <h5 style="margin: 0;">{{rentUser.floor}}/{{rentUser.countOfFloors}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Этаж</legend>
+      <h5 style="margin: 0;">{{rentUser.floor}}/{{rentUser.countOfFloors}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s6">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Тип аренды</legend>
+      <h5 style="margin: 0;">{{rentUser.typeOfRent}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s6">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Длительность аренды</legend>
+      <h5 style="margin: 0;">{{rentUser.dueDate}}</h5>
+    </fieldset>
+  </div>
+
+</div>
+
+<hr>
+
+<div>
+  <h4>Описание</h4>
+  <p>{{rentUser.description}}</p>
+</div>
+
+<hr>
+
+<div>
+  <h4>Контактная информация</h4>
+  <p>ФИО: {{rentUser.username}}</p>
+  <p><a href="" id="phoneNumberLink" data-phone="{{rentUser.phoneNumber}}">Позвонить</a></p>
+  <p><a href="mailto:{{rentUser.email}}">Написать на почту</a></p>
+  
+</div>
+
+<input type="hidden" id="saleId" name="" value="{{rentUser._id}}">
+
+<h5>{{rentUser.street}}</h5>
+<div id="YMapsID" style="width: 100%; height: 550px;"></div>
+<input id="coordinate" type="hidden" name="coordinate" value="{{rentUser.street}}">
+<input id="photosValue" type="hidden" name="photosValue" value="{{rentUser.photos}}">
+
+
+<script>
+  const photos = document.querySelector('#photosValue').value.split(',');
+
+  const phoneNumberLink = document.querySelector('#phoneNumberLink')
+  phoneNumberLink.href = `tel:${phoneNumberLink.dataset.phone.replace(/\s|[(]|[)]|[-]|[+]/g, '')}`
+
+  const list = document.createElement('ol');
+  const preview = document.querySelector('.photosPreview');
+  preview.appendChild(list);
+
+  for (const file of photos) {
+    const listItem = document.createElement('a')
+    listItem.classList.add('carousel-item')
+    const image = document.createElement('img');
+    image.style.objectFit = 'contain';
+    image.src = `${window.location.pathname.split('/').pop()}/${file}`
+    image.style.height = "100%";
+    listItem.appendChild(image);
+    list.appendChild(listItem);
+  }
+
+
+
+
+
+  ymaps.ready(function () {
+    let myMap = new ymaps.Map('YMapsID', {
+      center: [53.9, 27.56],
+      zoom: 11,
+      controls: ['zoomControl', 'typeSelector', 'fullscreenControl']
+    });
+
+    let myGeocoder = ymaps.geocode(`Беларусь, Минск, ${document.querySelector("#coordinate").value}`)
+    myGeocoder.then(function (res) {
+      myMap.geoObjects.add(res.geoObjects)
+    });
+
+  });
+</script>

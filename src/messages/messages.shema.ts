@@ -11,7 +11,7 @@ export class Message {
     @Prop({ required: true })
     email: string;
 
-    @Prop({ required: true })
+    @Prop({ required: true, ref: 'Users' })
     userId: Types.ObjectId;
 
     @Prop({ required: true })

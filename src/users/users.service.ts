@@ -5,7 +5,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { User, UserDoc } from './users.schema';
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
-import { RentRepository } from 'src/announcement/rent-announcement.repository copy';
+import { RentRepository } from 'src/announcement/rent-announcement.repository';
 import { SaleRepository } from 'src/announcement/sale-announcement.repository';
 import { EditUserDto } from './dto/edit-user.dto';
 

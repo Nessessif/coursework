@@ -32,6 +32,9 @@ export class AuthService {
     if (!user) {
       return 'Нет такого пользователя';
     }
+    if (user.banned) {
+      return 'Пользователь забанен';
+    }
     if (await bcrypt.compare(password, user.password)) {
       return user;
     }

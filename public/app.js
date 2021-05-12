@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
   M.FormSelect.init(selects);
 
   let carousel = document.querySelectorAll('.carousel');
-  M.Carousel.init(carousel);
+  M.Carousel.init(carousel, {
+    fullWidth: true,
+    indicators: true
+  });
+
 
   let streetInstance = M.Autocomplete.init(streetInput, {
     data: {}
@@ -174,9 +178,9 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
               cardHtml += `<div class="card rent__card">`
             }
-            cardHtml += `<div class="card-image waves-effect waves-block waves-light ">
-                  <img class="activator" src="https://global-uploads.webflow.com/5ef5480befd392489dacf544/5f9f5e5943de7e69a1339242_5f44a7398c0cdf460857e744_img-image.jpeg">
-                </div>
+            cardHtml += `<div class="card-image waves-effect waves-block waves-light">
+            <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center;">
+          </div>
                 <div class="card-content">
                   <span class="card-title activator grey-text text-darken-4">`
             if (type === 'sale') {
@@ -207,11 +211,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (type === 'sale') {
               cardHtml += `<div class="card-action">
-                    <a href="/announcement/sale/${el._id}">Перейти к объявлению</a>
+                    <a href="/announcement/sale/${el._id}" target="_blank">Перейти к объявлению</a>
                   </div>`
             } else {
               cardHtml += `<div class="card-action">
-              <a href="/announcement/rents/${el._id}">Перейти к объявлению</a>
+              <a href="/announcement/rents/${el._id}" target="_blank">Перейти к объявлению</a>
             </div>`
             }
             cardHtml += `<div class="card-reveal">
@@ -239,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  // console.log(window.location.pathname.split('/'));
+
 
 
 
@@ -471,6 +475,197 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  const cardPreview = document.querySelectorAll('.card-image')
+  if (cardPreview) {
+    cardPreview.forEach(el => {
+      if (el.dataset.imagepreview !== undefined) {
+        if (window.location.pathname === '/') {
+          el.style.backgroundImage = `url(${el.dataset.imagepreview.split(',')[0]})`
+        } else {
+          el.style.backgroundImage = `url(${window.location.pathname}/${el.dataset.imagepreview.split(',')[0]})`
+        }
+      }
+    })
+  }
 
+
+  //==============================Filter sales
+
+  function createSalesFilter() {
+    let filter = {}
+
+    let roomsCount = document.querySelector('div.input-field select[name=roomsCount]')
+    if (roomsCount) {
+      roomsCount = roomsCount.options[roomsCount.selectedIndex].text;
+      if (roomsCount !== 'Число комнат') {
+        filter.roomsCount = roomsCount;
+      }
+    }
+
+    let typeOfRent = document.querySelector('div.input-field select[name=typeOfRent]')
+    if (typeOfRent) {
+      typeOfRent = typeOfRent.options[typeOfRent.selectedIndex].text;
+      if (typeOfRent !== 'Тип аренды') {
+        filter.typeOfRent = typeOfRent;
+      }
+    }
+
+    let dueDate = document.querySelector('div.input-field select[name=dueDate]')
+    if (dueDate) {
+      dueDate = dueDate.options[dueDate.selectedIndex].text;
+      if (dueDate !== 'Срок сдачи') {
+        filter.dueDate = dueDate;
+      }
+    }
+
+    filter.totalAreaMin = document.querySelector('div#totalArea div.noUi-handle-lower span').textContent
+    filter.totalAreaMax = document.querySelector('div#totalArea div.noUi-handle-upper span').textContent
+
+    filter.livingAreaMin = document.querySelector('div#livingArea div.noUi-handle-lower span').textContent
+    filter.livingAreaMax = document.querySelector('div#livingArea div.noUi-handle-upper span').textContent
+
+    filter.kitchenAreaMin = document.querySelector('div#kitchenArea div.noUi-handle-lower span').textContent
+    filter.kitchenAreaMax = document.querySelector('div#kitchenArea div.noUi-handle-upper span').textContent
+
+    let typeHouse = document.querySelector('div.input-field select[name=typeHouse]')
+    typeHouse = typeHouse.options[typeHouse.selectedIndex].text;
+    if (typeHouse !== 'Тип дома') {
+      filter.typeHouse = typeHouse;
+    }
+
+    let balcony = document.querySelector('div.input-field select[name=balcony]')
+    balcony = balcony.options[balcony.selectedIndex].text;
+    if (balcony !== 'Балкон') {
+      filter.balcony = balcony;
+    }
+
+    let ownership = document.querySelector('div.input-field select[name=ownership]')
+    if (ownership) {
+      ownership = ownership.options[ownership.selectedIndex].text;
+      if (ownership !== 'Собственность') {
+        filter.ownership = ownership;
+      }
+    }
+
+    filter.priceMin = document.querySelector('div#price div.noUi-handle-lower span').textContent
+    filter.priceMax = document.querySelector('div#price div.noUi-handle-upper span').textContent
+
+    filter.type = document.querySelector('input[name=type]').value
+
+    return filter
+  }
+
+  function sendForPagesDataFilter(data, link) {
+    let url = link
+    fetch(url, {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json(data))
+      .then((cards) => {
+        const cardGrid = document.querySelector('.card__wrapper')
+        let cardHtml = ''
+        let type = ''
+        let hostname = window.location.pathname.split('/')
+        if (hostname[hostname.length - 1] === 'sales') {
+          type = 'sale'
+        } else {
+          type = 'rent'
+        }
+        cards.forEach(el => {
+          cardHtml += `<div class="card__wrapper-inner col s6">`
+          if (type === 'sale') {
+            cardHtml += `<div class="card">`
+          } else {
+            cardHtml += `<div class="card rent__card">`
+          }
+          cardHtml += `<div class="card-image waves-effect waves-block waves-light">
+          <img class="activator card-image" data-imagepreview="{{photos}}" style="min-height: 350px; background-size: cover; background-position: center; background-image: url(${hostname[hostname.length - 1]}/${el.photos.toString().split(',')[0]})">
+        </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">`
+          if (type === 'sale') {
+            cardHtml += 'Продажа'
+          } else {
+            cardHtml += 'Аренда'
+          }
+          cardHtml += `<i class="material-icons right">more_vert</i>
+                </span>
+
+                <h5>Цена: ${el.price}</h5>`
+
+          if (type === 'rent') {
+            cardHtml += `<p>Срок аренды: ${el.dueDate}</p>`
+          }
+
+          cardHtml += `<p>Минск, ${el.street}</p>`
+          if (type === 'sale') {
+            cardHtml += `<span>${el.roomsCount}</span>`
+          } else {
+            cardHtml += `<span>${el.typeOfRent}</span>`
+          }
+
+          cardHtml += `
+                <span>${el.livingArea}м2</span>
+                <span>${el.floor}/${el.countOfFloors} этаж</span>
+              </div>`
+
+          if (type === 'sale') {
+            cardHtml += `<div class="card-action">
+                  <a href="/announcement/sale/${el._id}">Перейти к объявлению</a>
+                </div>`
+          } else {
+            cardHtml += `<div class="card-action">
+            <a href="/announcement/rents/${el._id}">Перейти к объявлению</a>
+          </div>`
+          }
+          cardHtml += `<div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>
+                <p>${el.description}</p>
+              </div>
+            </div>
+          </div>`
+        })
+        cardGrid.innerHTML = cardHtml
+      })
+  }
+
+  const announcementFilter = document.querySelector('a.waves-green#announcementFilter')
+  if (announcementFilter) {
+    announcementFilter.addEventListener('click', (event) => {
+      event.preventDefault();
+      sendForPagesDataFilter(createSalesFilter(), '/announcement/filter/');
+    })
+  }
+
+  const announcementSort = document.querySelector('a.waves-green#announcementSort')
+  if (announcementSort) {
+    announcementSort.addEventListener('click', (event) => {
+      event.preventDefault();
+      let sortData = {}
+      let sortValue = document.querySelector('div.input-field select[name=sortValue]')
+      sortValue = sortValue.options[sortValue.selectedIndex].text;
+      sortData.value = sortValue;
+      sortData.type = document.querySelector('input[name=type]').value;
+      sendForPagesDataFilter(sortData, '/announcement/sort/');
+    })
+  }
+
+
+
+  const announcementSearch = document.querySelector('i#announcementSearch')
+  if (announcementSearch) {
+    announcementSearch.addEventListener('click', (event) => {
+      event.preventDefault();
+      let searchData = {}
+      let searchValue = document.querySelector('input#searchValue').value
+      searchData.value = searchValue;
+      searchData.type = document.querySelector('input[name=type]').value;
+      sendForPagesDataFilter(searchData, '/announcement/search/');
+    })
+  }
 
 });

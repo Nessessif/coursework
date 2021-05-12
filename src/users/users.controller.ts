@@ -15,7 +15,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Get('profile/:_id')
   @Render('profile')
@@ -24,6 +24,13 @@ export class UsersController {
       res.redirect('/');
     }
     return this.usersService.renderProfile(params._id);
+  }
+
+  @Get('profile/:_id/:imgpath')
+  async sendRentImage(@Res() res: Response, @Param('imgpath') img) {
+    return res.sendFile(img, {
+      root: 'uploads',
+    });
   }
 
   @Get('edit/:_id')

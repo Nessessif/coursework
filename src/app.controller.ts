@@ -15,7 +15,7 @@ export class AppController {
   @Get(':imgpath')
   async sendImage(@Res() res: Response, @Param('imgpath') img) {
     return res.sendFile(img, {
-      root: 'uploads'
+      root: 'uploads',
     });
   }
 }

@@ -5,7 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { User, UserSchema } from 'src/users/users.schema';
 import { AnnouncementController } from './announcement.controller';
 import { AnnouncementService } from './announcement.service';
-import { RentRepository } from './rent-announcement.repository copy';
+import { RentRepository } from './rent-announcement.repository';
 import { Rent, RentSchema } from './rents.shema';
 import { SaleRepository } from './sale-announcement.repository';
 import { Sale, SaleSchema } from './sales.shema';

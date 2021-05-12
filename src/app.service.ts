@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RentRepository } from './announcement/rent-announcement.repository copy';
+import { RentRepository } from './announcement/rent-announcement.repository';
 import { SaleRepository } from './announcement/sale-announcement.repository';
 import { UsersRepository } from './users/users.repository';
 
@@ -9,7 +9,7 @@ export class AppService {
     private usersRepository: UsersRepository,
     private saleRepository: SaleRepository,
     private rentRepository: RentRepository,
-  ) {}
+  ) { }
   async render(isAuth) {
     const user = await this.usersRepository.getUserById(isAuth);
     const sales = await this.saleRepository.getSales(8);

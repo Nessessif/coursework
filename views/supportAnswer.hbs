@@ -1,0 +1,10 @@
+<h2>Сообщение</h2>
+<p>{{message.text}}</p>
+<hr>
+<h2>Ответ</h2>
+<form action="/messages/sendAnswer" method="POST">
+    <input type="hidden" name="email" value="{{message.email}}">
+    <input type="hidden" name="_id" value="{{message._id}}">
+    <textarea class="materialize-textarea" name="answer" id="answer" rows="20"></textarea>
+    <button type="submit" class="btn">Отправить</button>
+</form>

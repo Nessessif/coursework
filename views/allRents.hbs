@@ -1,13 +1,147 @@
+<div id="filter" class="modal">
+  <div class="modal-content">
+    <h4 style="padding-bottom: 20px;">Параметры</h4>
+
+    <div class="input-field">
+      <select name="typeOfRent">
+        <option value="" disabled selected>Тип аренды</option>
+        <option value="комната">комната</option>
+        <option value="1 комн. квартира">1 комн. квартира</option>
+        <option value="2 комн. квартира">2 комн. квартира</option>
+        <option value="3 комн. квартира">3 комн. квартира</option>
+        <option value="4 комн. квартира">4 комн. квартира</option>
+        <option value="5 комн. квартира">5 комн. квартира</option>
+        <option value="6 комн. квартира">6 комн. квартира</option>
+        <option value="7 комн. квартира">7 комн. квартира</option>
+        <option value="8 комн. квартира">8 комн. квартира</option>
+      </select>
+      <label>Тип аренды</label>
+    </div>
+
+    <div class="input-field">
+      <select name="dueDate">
+        <option value="" disabled selected>Срок сдачи</option>
+        <option value="сутки/часы">сутки/часы</option>
+        <option value="месяц">месяц</option>
+        <option value="2 месяца">2 месяца</option>
+        <option value="3 месяца">3 месяца</option>
+        <option value="полгода">полгода</option>
+        <option value="год">год</option>
+        <option value="длительный">длительный</option>
+      </select>
+      <label>Срок сдачи</label>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+      <span>Общая площадь</span>
+      <div id="totalArea" class="rangeInput"></div>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+      <span>Жилая площадь</span>
+      <div id="livingArea" class="rangeInput"></div>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+
+      <span>Площадь кухни</span>
+      <div id="kitchenArea" class="rangeInput"></div>
+    </div>
+
+    <div class="input-field">
+      <select name="typeHouse">
+        <option value="" disabled selected>Тип дома</option>
+        <option value="панельный">панельный</option>
+        <option value="кирпичный">кирпичный</option>
+        <option value="блок-комнаты">блок-комнаты</option>
+        <option value="монолитный">монолитный</option>
+        <option value="каркасно-блочный">каркасно-блочный</option>
+        <option value="силикатные блоки">силикатные блоки</option>
+        <option value="бревенчатый">бревенчатый</option>
+      </select>
+      <label>Тип дома</label>
+    </div>
+
+    <div class="input-field">
+      <select name="balcony">
+        <option value="" disabled selected>Балкон</option>
+        <option value="нет">нет</option>
+        <option value="балкон">балкон</option>
+        <option value="лоджия">лоджия</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="балкон застекленный">балкон застекленный</option>
+        <option value="2 балкона">2 балкона</option>
+        <option value="2 лоджии">2 лоджии</option>
+        <option value="2 балкона застекленные">2 балкона застекленные</option>
+        <option value="2 лоджии застекленные">2 лоджии застекленные</option>
+      </select>
+      <label>Балкон</label>
+    </div>
+
+
+    <div>
+      <span>Цена</span>
+      <div id="price" class="rangeInput"></div>
+    </div>
+
+    <input type="hidden" value="rent" name="type">
+  </div>
+  <div class="modal-footer">
+    <a href="" class="modal-close waves-effect waves-red btn-flat">Закрыть</a>
+    <a href="" class="modal-close waves-effect waves-green btn-flat" id="announcementFilter">Фильтровать</a>
+  </div>
+</div>
+
+
+
+
+
+<div id="sort" class="modal">
+  <div class="modal-content" style="padding-bottom: 100px;">
+    <h4>Сортировки</h4>
+    <div class="input-field">
+      <select name="sortValue">
+        <option value="от дешевых к дорогим">от дешевых к дорогим</option>
+        <option value="от дорогих к дешевым">от дорогих к дешевым</option>
+      </select>
+      <label>Сортировки</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="" class="modal-close waves-effect waves-red btn-flat">Закрыть</a>
+    <a href="" class="modal-close waves-effect waves-green btn-flat" id="announcementSort">Сортировать</a>
+  </div>
+</div>
+<div class="head-panel row" style="margin-top: 40px;">
+  <div class="col s4 ">
+    <a class="waves-effect waves-light btn modal-trigger" style="min-width: 130px;" href="#filter">Параметры</a>
+  </div>
+  <div class="col s4 ">
+    <a class="waves-effect waves-light btn modal-trigger" style="min-width: 130px;" href="#sort">Сортировки</a>
+  </div>
+  <div class="search-wrapper col s4">
+    <form action="" method="" style="display: flex; align-items: center; justify-content: space-between;">
+      <input id="searchValue" name="search" placeholder="Поиск улицы">
+      <a href="" style="text-decoration: none;">
+        <i class="material-icons" id="announcementSearch">search</i>
+      </a>
+    </form>
+  </div>
+</div>
 
 {{#if rents.length}}
-  <h1>Аренда квартир</h1>  
-  <div class="card__wrapper row">
+<h1>Аренда квартир</h1>
+<div class="card__wrapper row">
   {{#each rents }}
-    {{> cardRent}}
+  {{> cardRent}}
   {{/each}}
 </div>
 <div class="row">
-  <div class="col s10"><ul id="pagination" class="pagination" data-pages="{{countPage}}" data-otherpages="{{countPage}}"></ul></div>
+  <div class="col s10">
+    <ul id="pagination" class="pagination" data-pages="{{countPage}}" data-otherpages="{{countPage}}"></ul>
+  </div>
   <div class="input-field col s2">
     <select name="countOnPage" id="countOnPage">
       <option value="8">8</option>
@@ -17,5 +151,5 @@
   </div>
 </div>
 {{else}}
- <h1>Товаров для аренды нет</h1>
+<h1>Товаров для аренды нет</h1>
 {{/if}}

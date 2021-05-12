@@ -1,65 +1,133 @@
+
+
+<style>
+  .input-field {
+    margin: 15px 0 !important;
+  }
+</style>
+
 <h1>Анкета</h1>
 
+
+<div class=" photosPreview carousel carousel-slider"></div>
+
+<div class="row s12" style="margin-top: 50px;">
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Общая площадь</legend>
+      <h5 style="margin: 0;">{{saleUser.totalArea}}</h5>
+    </fieldset>
+  </div>
+  
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Жилая площадь</legend>
+      <h5 style="margin: 0;">{{saleUser.livingArea}}</h5>
+    </fieldset>
+  </div>
+
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Площадь кухни</legend>
+      <h5 style="margin: 0;">{{saleUser.kitchenArea}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s8">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Балкон</legend>
+      <h5 style="margin: 0;">{{saleUser.balcony}}</h5>
+    </fieldset>
+  </div>
+
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Цена</legend>
+      <h5 style="margin: 0;">{{saleUser.price}} {{saleUser.currency}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Тип дома</legend>
+      <h5 style="margin: 0;">{{saleUser.typeHouse}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Этаж</legend>
+      <h5 style="margin: 0;">{{saleUser.floor}}/{{saleUser.countOfFloors}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Этаж</legend>
+      <h5 style="margin: 0;">{{saleUser.floor}}/{{saleUser.countOfFloors}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s4">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Количество комнат</legend>
+      <h5 style="margin: 0;">{{saleUser.roomsCount}}</h5>
+    </fieldset>
+  </div>
+
+  <div class="input-field col s8">
+    <fieldset style="border-color: #EE6E73;">
+      <legend>Собственность </legend>
+      <h5 style="margin: 0;">{{saleUser.ownership}}</h5>
+    </fieldset>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <h4>Описание</h4>
+  <p>{{saleUser.description}}</p>
+</div>
+
+<hr>
+
+<div>
+  <h4>Контактная информация</h4>
+  <p>ФИО: {{saleUser.username}}</p>
+  <p><a href="" id="phoneNumberLink" data-phone="{{saleUser.phoneNumber}}">Позвонить</a></p>
+  <p><a href="mailto:{{saleUser.email}}">Написать на почту</a></p>
+  
+</div>
+
+<input type="hidden" id="saleId" name="" value="{{saleUser._id}}">
+
+<h5>{{saleUser.street}}</h5>
 <div id="YMapsID" style="width: 100%; height: 550px;"></div>
 <input id="coordinate" type="hidden" name="coordinate" value="{{saleUser.street}}">
 <input id="photosValue" type="hidden" name="photosValue" value="{{saleUser.photos}}">
 
 
-<div class="row s12">
-  <div class="input-field col s4">
-    <input id="totalArea" type="text" disabled value="{{saleUser.totalArea}}">
-    <label for="totalArea">Общая площадь</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="livingArea" type="text" disabled value="{{saleUser.livingArea}}">
-    <label for="livingArea">Жилая площадь</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="kitchenArea" type="text" disabled value="{{saleUser.kitchenArea}}">
-    <label for="kitchenArea">Площадь кухни</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="balcony" type="text" disabled value="{{saleUser.balcony}}">
-    <label for="balcony">Балкон</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="price" type="text" disabled value="{{saleUser.price}}">
-    <label for="price">Цена</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="currency" type="text" value="{{saleUser.currency}}">
-    <label for="currency">Валюта</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="typeHouse" type="text" disabled value="{{saleUser.typeHouse}}">
-    <label for="typeHouse">Тип дома</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="floor" type="text" disabled value="{{saleUser.floor}}">
-    <label for="floor">Этаж</label>
-  </div>
-  <div class="input-field col s4">
-    <input id="countOfFloors" type="text" disabled value="{{saleUser.countOfFloors}}">
-    <label for="countOfFloors">Этажность</label>
-  </div>
-</div>
-
-<input type="hidden" id="saleId" name="" value="{{saleUser._id}}">
-<div class="photosPreview"></div>
-
-
 <script>
   const photos = document.querySelector('#photosValue').value.split(',');
+
+  const phoneNumberLink = document.querySelector('#phoneNumberLink')
+  phoneNumberLink.href = `tel:${phoneNumberLink.dataset.phone.replace(/\s|[(]|[)]|[-]|[+]/g, '')}`
 
   const list = document.createElement('ol');
   const preview = document.querySelector('.photosPreview');
   preview.appendChild(list);
 
   for (const file of photos) {
-    const listItem = document.createElement('li');
+    const listItem = document.createElement('a')
+    listItem.classList.add('carousel-item')
     const image = document.createElement('img');
-    image.src = `60980067ea61f64f145f8287/${file}`
-    image.style.height = "200px";
+    image.style.objectFit = 'contain';
+    image.src = `${window.location.pathname.split('/').pop()}/${file}`
+    image.style.height = "100%";
     listItem.appendChild(image);
     list.appendChild(listItem);
   }
