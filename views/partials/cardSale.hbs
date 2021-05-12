@@ -17,13 +17,13 @@
       <span>{{floor}}/{{countOfFloors}} этаж</span>
     </div>
 
-      <div class="card-action">
-        <a href="/announcement/sale/{{_id}}" target="_blank">Перейти к объявлению</a>
-        {{#if @root.isProfile}}
-          <a href="/announcement/sale/edit/{{_id}}">Отредактировать</a>
-          <a href="/announcement/sale/delete/{{_id}}">Удалить</a>
-        {{/if}}
-      </div>
+    <div class="card-action">
+      <a href="/announcement/sale/{{_id}}" target="_blank">Перейти к объявлению</a>
+      {{#if @root.isProfile}}
+      <a href="/announcement/sale/edit/{{_id}}">Отредактировать</a>
+      <a href="/announcement/sale/delete/{{_id}}">Удалить</a>
+      {{/if}}
+    </div>
 
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">Описание<i class="material-icons right">close</i></span>

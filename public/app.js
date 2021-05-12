@@ -495,9 +495,27 @@ document.addEventListener('DOMContentLoaded', function () {
     let filter = {}
 
     let roomsCount = document.querySelector('div.input-field select[name=roomsCount]')
-    roomsCount = roomsCount.options[roomsCount.selectedIndex].text;
-    if (roomsCount !== 'Число комнат') {
-      filter.roomsCount = roomsCount;
+    if (roomsCount) {
+      roomsCount = roomsCount.options[roomsCount.selectedIndex].text;
+      if (roomsCount !== 'Число комнат') {
+        filter.roomsCount = roomsCount;
+      }
+    }
+
+    let typeOfRent = document.querySelector('div.input-field select[name=typeOfRent]')
+    if (typeOfRent) {
+      typeOfRent = typeOfRent.options[typeOfRent.selectedIndex].text;
+      if (typeOfRent !== 'Тип аренды') {
+        filter.typeOfRent = typeOfRent;
+      }
+    }
+
+    let dueDate = document.querySelector('div.input-field select[name=dueDate]')
+    if (dueDate) {
+      dueDate = dueDate.options[dueDate.selectedIndex].text;
+      if (dueDate !== 'Срок сдачи') {
+        filter.dueDate = dueDate;
+      }
     }
 
     filter.totalAreaMin = document.querySelector('div#totalArea div.noUi-handle-lower span').textContent
@@ -522,9 +540,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     let ownership = document.querySelector('div.input-field select[name=ownership]')
-    ownership = ownership.options[ownership.selectedIndex].text;
-    if (ownership !== 'Собственность') {
-      filter.ownership = ownership;
+    if (ownership) {
+      ownership = ownership.options[ownership.selectedIndex].text;
+      if (ownership !== 'Собственность') {
+        filter.ownership = ownership;
+      }
     }
 
     filter.priceMin = document.querySelector('div#price div.noUi-handle-lower span').textContent

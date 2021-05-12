@@ -9,6 +9,22 @@ import { EditUserDto } from './dto/edit-user.dto';
 export class UsersRepository {
   constructor(@InjectModel(User.name) private userModel: Model<UserDoc>) { }
 
+  async unban(userId) {
+    return await this.userModel.updateOne(
+      { _id: Types.ObjectId(userId) },
+      { banned: false },
+      { new: true, useFindAndModify: false },
+    );
+  }
+
+  async ban(userId) {
+    return await this.userModel.updateOne(
+      { _id: Types.ObjectId(userId) },
+      { banned: true },
+      { new: true, useFindAndModify: false },
+    );
+  }
+
   async deleteSale(announcementId, userId) {
     return await this.userModel.updateOne(
       { _id: Types.ObjectId(userId) },
@@ -18,10 +34,9 @@ export class UsersRepository {
   }
 
   async deleteRent(announcementId, userId) {
-    console.log('zalupa5');
-    return await this.userModel.findOneAndUpdate(
+    return await this.userModel.updateOne(
       { _id: Types.ObjectId(userId) },
-      { $pull: { rentsId: [Types.ObjectId(announcementId)] } },
+      { $pull: { rentsId: Types.ObjectId(announcementId) } },
       { new: true, useFindAndModify: false },
     );
   }
@@ -68,6 +83,12 @@ export class UsersRepository {
 
   async getUserById(_id: string): Promise<UserDoc> {
     return await this.userModel.findById(Types.ObjectId(_id));
+  }
+
+
+  async getEmail(_id: string) {
+    let user = await this.userModel.findOne({ _id: Types.ObjectId(_id) })
+    return user.email
   }
 
   async getUserBySaleId(_id: string) {

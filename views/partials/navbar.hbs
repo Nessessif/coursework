@@ -1,12 +1,27 @@
 <nav>
   <div class="nav-wrapper">
     {{#if isAdmin}}
-    <a href="/admin" class="brand-logo">Администрирование</a>
+    <a href="/admin/login/{{admin._id}}" class="brand-logo">Администрирование</a>
     {{else}}
     <a href="/" class="brand-logo">Риэлторство</a>
     {{/if}}
 
     <ul id="nav-mobile" class="right hide-on-med-and-down">
+      {{#if isAdmin}}
+
+      {{#if isLogin}}
+      <a class="dropdown-trigger btn" href="#" data-target="dropdown1">{{admin.login}}</a>
+
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="/admin/add">Добавить администраторов</a></li>
+        <li><a href="/admin/delete">Удалить администраторов</a></li>
+        <li><a href="/admin/support">Ответ поддержки</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="/admin/logout">Выйти</a></li>
+      </ul>
+      {{/if}}
+
+      {{else}}
 
       {{#if isRents}}
       <li class='active'><a href="/announcement/rents">Арендовать</a></li>
@@ -30,6 +45,7 @@
         <li><a href="/users/profile/{{user._id}}">Профиль</a></li>
         <li><a href="/announcement/sale">Продать квартиру</a></li>
         <li><a href="/announcement/rent">Сдать в аренду квартиру</a></li>
+        <li><a href="/announcement/support">Написать в поддержку</a></li>
         <li class="divider" tabindex="-1"></li>
         <li><a href="/auth/logout">Выйти</a></li>
       </ul>
@@ -46,6 +62,7 @@
 
       {{/if}}
 
+      {{/if}}
     </ul>
   </div>
 </nav>

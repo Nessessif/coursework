@@ -7,7 +7,7 @@ import { MessagesService } from './messages.service';
 export class MessagesController {
     constructor(private readonly messagesService: MessagesService) { }
 
-    @Post('sendMessage')
+    @Post('support/send')
     async sendMessage(
         @Body() dto: MessagesDto,
         @Req() req,
@@ -25,6 +25,8 @@ export class MessagesController {
     async render(@Req() req, @Res() res: Response) {
         return await this.messagesService.getMessages();
     }
+
+
 
 
 }

@@ -21,7 +21,7 @@ import { extname } from 'path';
 
 @Controller('announcement')
 export class AnnouncementController {
-  constructor(private readonly announcementService: AnnouncementService) {}
+  constructor(private readonly announcementService: AnnouncementService) { }
 
   @Get('sale')
   @Render('sale')
@@ -30,6 +30,15 @@ export class AnnouncementController {
       res.redirect('/');
     }
     return this.announcementService.renderSale(req.cookies['Authentication']);
+  }
+
+  @Get('support')
+  @Render('userSupport')
+  userSupport(@Req() req, @Res() res: Response) {
+    if (!req.cookies['Authentication']) {
+      res.redirect('/');
+    }
+    return this.announcementService.renderSupport(req.cookies['Authentication']);
   }
 
   @Get('rent')
@@ -212,6 +221,17 @@ export class AnnouncementController {
       );
   }
 
+  @Post('search')
+  async getSearch(@Req() req, @Res() res: Response) {
+    res
+      .status(200)
+      .json(
+        await this.announcementService.getSearch(
+          req.body
+        ),
+      );
+  }
+
 
   @Post('sale/edit')
   async editSale(
@@ -238,7 +258,6 @@ export class AnnouncementController {
     @Req() req,
     @Res() res: Response,
   ) {
-
     const status = await this.announcementService.edit(
       req.body._id,
       dto,
@@ -271,26 +290,23 @@ export class AnnouncementController {
     }
   }
 
-  // @Get('rent/delete/:_id')
-  // async deleteRents(
-  //   @Req() req,
-  //   @Res() res: Response,
-  //   @Param() params,
-  // ) {
-  //   console.log(params);
-
-  //   const status = await this.announcementService.deleteRents(
-  //     params._id,
-  //     req.cookies['Authentication'],
-  //   );
-  //   if (status === 'good') {
-  //     return res.redirect('/');
-  //   } else {
-  //     req.flash('registerError', status);
-  //     res.redirect('/');
-  //   }
-  // }
-
+  @Get('rent/delete/:_id')
+  async deleteRents(
+    @Req() req,
+    @Res() res: Response,
+    @Param() params,
+  ) {
+    const status = await this.announcementService.deleteRents(
+      params._id,
+      req.cookies['Authentication'],
+    );
+    if (status === 'good') {
+      return res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    } else {
+      req.flash('registerError', status);
+      res.redirect(`/users/profile/${req.cookies['Authentication']}`);
+    }
+  }
 
   @Get('sale/:_id/:imgpath')
   async sendImage(@Res() res: Response, @Param('imgpath') img) {

@@ -7,6 +7,8 @@ export class MessagesReporitory {
     constructor(@InjectModel(Message.name) private messageModule: Model<MessageDoc>) { }
 
     async add(dto: MessagesDto) {
+        console.log(dto);
+
         return await this.messageModule.create({
             _id: Types.ObjectId(),
             email: dto.email,

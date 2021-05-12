@@ -15,6 +15,27 @@ export class AdminsReporitory {
         });
     }
 
+
+    async add(dto: AdminDto) {
+        return await this.adminModule.create({
+            _id: Types.ObjectId(),
+            login: dto.login,
+            password: await bcrypt.hash(dto.password, 10),
+        });
+    }
+
+    async delete(userId) {
+        return await this.adminModule.findOneAndDelete({ _id: Types.ObjectId(userId) })
+    }
+
+    async getAll() {
+        return await this.adminModule.find();
+    }
+
+    async getById(_id: string): Promise<AdminDoc> {
+        return await this.adminModule.findById(Types.ObjectId(_id));
+    }
+
     async getByLogin(login: string): Promise<AdminDoc> {
         return await this.adminModule.findOne({
             login: login,

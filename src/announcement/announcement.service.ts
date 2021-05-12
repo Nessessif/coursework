@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import path, { extname } from 'path';
 import { UsersRepository } from 'src/users/users.repository';
 import { AnnouncementDto } from './dto/announcement.dto';
-import { RentRepository } from './rent-announcement.repository copy';
+import { RentRepository } from './rent-announcement.repository';
 import { SaleRepository } from './sale-announcement.repository';
 import { RentAnnouncement } from './structure/rent-announcement';
 import { SaleAnnouncement } from './structure/sale-announcement';
@@ -14,7 +14,7 @@ export class AnnouncementService {
     private rentRepository: RentRepository,
     private saleRepository: SaleRepository,
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
 
 
@@ -23,6 +23,15 @@ export class AnnouncementService {
     const user = await this.usersRepository.getUserById(isAuth);
     return {
       title: 'Продажа квартиры',
+      layout: 'layouts/main',
+      user,
+    };
+  }
+
+  async renderSupport(isAuth) {
+    const user = await this.usersRepository.getUserById(isAuth);
+    return {
+      title: 'Тех поддержка',
       layout: 'layouts/main',
       user,
     };
@@ -298,6 +307,8 @@ export class AnnouncementService {
   }
 
   async edit(announcementId, dto: AnnouncementDto, userId: string) {
+    console.log(dto.type);
+
     if (dto.type === 'sale') {
       await this.saleRepository.edit(announcementId, dto);
       return 'good';
