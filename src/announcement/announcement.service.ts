@@ -307,8 +307,6 @@ export class AnnouncementService {
   }
 
   async edit(announcementId, dto: AnnouncementDto, userId: string) {
-    console.log(dto.type);
-
     if (dto.type === 'sale') {
       await this.saleRepository.edit(announcementId, dto);
       return 'good';

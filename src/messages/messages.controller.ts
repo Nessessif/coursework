@@ -52,9 +52,6 @@ export class MessagesController {
             html: toMail, // html body
         });
 
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
         await this.messagesService.deleteById(req.body._id);
         res.redirect(`/admin/login/${req.cookies['Admin']}`)
     }
